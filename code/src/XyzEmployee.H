@@ -76,7 +76,6 @@ class XyzFullTimeEmployee : public XyzEmployee {
         virtual void printEmployeeDetails() override;
         int getLeavesAvailed();
         int getLeavesLeft();
-        void availLeaves(int);
         void updateLeavesLeft(int);   
         friend ostream& operator<<(ostream&, const XyzFullTimeEmployee&);
         friend istream& operator>>(istream& InParam, XyzFullTimeEmployee& InputParam);

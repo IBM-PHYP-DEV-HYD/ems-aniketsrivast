@@ -54,21 +54,18 @@ namespace XyzEmployeeEnums{
     enum EmployeeStatus{
         Active = 1,
         Inactive,
-        Resigned,
-        EmployeeStatusMax
+        Resigned
     };
 
     enum EmployeeType{
         FullTime = 1,
         Contractor,
-        Intern,
-        EmployeeTypeMax
+        Intern
     };
 
     enum EmployeeGender{
         Male = 1,
-        Female,
-        EmployeeGenderMax
+        Female
     };
 
     // Contractor Agencies

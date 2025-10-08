@@ -138,17 +138,6 @@ int XyzFullTimeEmployee::getLeavesLeft(){
     return mLeavesLeft;
 }
 
-// Avail leaves from existing pool
-void XyzFullTimeEmployee::availLeaves(int leavesParam){
-    if(leavesParam <= mLeavesLeft){
-        mLeavesAvailed += leavesParam;
-        mLeavesLeft -= leavesParam;
-    }
-    else{
-        cout<<"Not enough leaves."<<endl;
-    }
-}
-
 // Update leaves left
 void XyzFullTimeEmployee::updateLeavesLeft(int leavesParam){
     mLeavesLeft += leavesParam;
