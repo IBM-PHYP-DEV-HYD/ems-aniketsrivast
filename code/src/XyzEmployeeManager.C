@@ -335,38 +335,33 @@ XyzEmployee* XyzEmployeeManager::createEmployeeFromInput() {
     if (sTypeChoice == XyzEmployeeEnums::FullTime) {
         auto* sFullTimeEmployee = new XyzFullTimeEmployee();
         cin >> *sFullTimeEmployee; // expects operator>> for derived / base fields
-        if (sFullTimeEmployee->getEmployeeID().empty()) {
+        // if (sFullTimeEmployee->getEmployeeID().empty()) {
             sFullTimeEmployee->setEmployeeID(generateNextEmployeeID('F'));
-        }
+        // }
         sEmployee = sFullTimeEmployee;
     } else if (sTypeChoice == XyzEmployeeEnums::Contractor) {
         auto* sContractor = new XyzContractorEmployee();
         cin >> *sContractor;
-        cout << "Choose Agency: 1.Avengers 2.Justice League 3.X-Men\nChoice: ";
-        int sAgency;
-        cin >> sAgency;
-        cin.ignore();
-        sContractor->setAgency(sAgency);
-        if (sContractor->getEmployeeID().empty()) {
+        // if (sContractor->getEmployeeID().empty()) {
             sContractor->setEmployeeID(generateNextEmployeeID('C'));
-        }
+        // }
         sEmployee = sContractor;
     } else {
         auto* sIntern = new XyzInternEmployee();
         cin >> *sIntern;
-        cout << "Choose College (1..7):\n1.IITD 2.IITM 3.IITK 4.IITH 5.NITW 6.NITT 7.IIITH\nChoice: ";
-        int sCollege; 
-        cin >> sCollege; 
-        cin.ignore();
-        sIntern->setCollege(sCollege);
-        cout << "Choose Branch (1..3): 1.CSE 2.CSIT 3.ECE\nChoice: ";
-        int sBranch;
-        cin >> sBranch; 
-        cin.ignore();
-        sIntern->setBranch(sBranch);
-        if (sIntern->getEmployeeID().empty()) {
+        // cout << "Choose College (1..7):\n1.IITD 2.IITM 3.IITK 4.IITH 5.NITW 6.NITT 7.IIITH\nChoice: ";
+        // int sCollege; 
+        // cin >> sCollege; 
+        // cin.ignore();
+        // sIntern->setCollege(sCollege);
+        // cout << "Choose Branch (1..3): 1.CSE 2.CSIT 3.ECE\nChoice: ";
+        // int sBranch;
+        // cin >> sBranch; 
+        // cin.ignore();
+        // sIntern->setBranch(sBranch);
+        // if (sIntern->getEmployeeID().empty()) {
             sIntern->setEmployeeID(generateNextEmployeeID('I'));
-        }
+        // }
         sEmployee = sIntern;
     }
     return sEmployee;
@@ -658,7 +653,7 @@ void XyzEmployeeManager::subOthersMenu() {
                 pauseForEnter();
                 break;
             }
-            
+
             default:
                 cout << "Invalid choice.\n";
                 break;

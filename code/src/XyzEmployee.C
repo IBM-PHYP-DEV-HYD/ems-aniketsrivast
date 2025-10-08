@@ -86,18 +86,14 @@ ostream& operator<<(ostream& OutParam, const XyzEmployee& XyzEmployeeParam){
 
 istream& operator>>(istream& InParam, XyzEmployee& XyzEmployeeParam) {
         cout << "Enter Name: ";
-        InParam.ignore();
         getline(InParam, XyzEmployeeParam.mName);
         cout << "Enter Employee ID: ";
-        InParam.ignore();
         getline(InParam, XyzEmployeeParam.mEmpID);
         cout << "Enter Gender: ";
         InParam >> XyzEmployeeParam.mGender;
         cout << "Enter Date of Birth: ";
-        InParam.ignore();
         getline(InParam, XyzEmployeeParam.mDOB);
         cout << "Enter Date of Joining: ";
-        InParam.ignore();
         getline(InParam, XyzEmployeeParam.mDOJ);
         cout << "Enter Type: 1. Full-Time, 2. Contractor, 3. Intern"<<endl;
         cout<<"Your choice: ";
@@ -161,30 +157,21 @@ ostream& operator<<(ostream& OutParam, const XyzFullTimeEmployee& XyzFullTimeEmp
 
 istream& operator>>(istream& InParam, XyzFullTimeEmployee& XyzEmployeeParam) {
         cout << "Enter Name: ";
-        InParam.ignore();
         getline(InParam, XyzEmployeeParam.mName);
-        cout << "Enter Employee ID: ";
-        InParam.ignore();
-        getline(InParam, XyzEmployeeParam.mEmpID);
-        cout << "Enter Gender: ";
+        cout << "Enter Gender: 1. Male, 2. Female"<<endl;
+        cout << "Your choice: ";
         InParam >> XyzEmployeeParam.mGender;
+        InParam.ignore();        
         cout << "Enter Date of Birth: ";
-        InParam.ignore();
         getline(InParam, XyzEmployeeParam.mDOB);
         cout << "Enter Date of Joining: ";
-        InParam.ignore();
         getline(InParam, XyzEmployeeParam.mDOJ);
-        cout << "Enter Type: 1. Full-Time, 2. Contractor, 3. Intern"<<endl;
-        cout<<"Your choice: ";
-        InParam>>XyzEmployeeParam.mType;
-        cout<<endl;
+        XyzEmployeeParam.mType = XyzEmployeeEnums::FullTime;
         cout << "Enter Status: 1. Active, 2. Inactive, 3. Resigned"<<endl;
         cout<<"Your choice: ";
         InParam>>XyzEmployeeParam.mStatus;
         cout<<endl;
-        cout<<"Enter Leaves Left: ";
-        InParam>>XyzEmployeeParam.mLeavesLeft;
-        cout<<endl;
+        XyzEmployeeParam.mLeavesLeft = STANDARD_LEAVES;
         return InParam;
 }
 
@@ -229,23 +216,16 @@ ostream& operator<<(ostream& OutParam, const XyzContractorEmployee& XyzFullTimeE
 
 istream& operator>>(istream& InParam, XyzContractorEmployee& XyzEmployeeParam) {
         cout << "Enter Name: ";
-        InParam.ignore();
         getline(InParam, XyzEmployeeParam.mName);
-        cout << "Enter Employee ID: ";
-        InParam.ignore();
-        getline(InParam, XyzEmployeeParam.mEmpID);
-        cout << "Enter Gender: ";
+        cout << "Enter Gender: 1. Male, 2. Female"<<endl;
+        cout << "Your choice: ";
         InParam >> XyzEmployeeParam.mGender;
+        InParam.ignore();        
         cout << "Enter Date of Birth: ";
-        InParam.ignore();
         getline(InParam, XyzEmployeeParam.mDOB);
         cout << "Enter Date of Joining: ";
-        InParam.ignore();
         getline(InParam, XyzEmployeeParam.mDOJ);
-        cout << "Enter Type: 1. Full-Time, 2. Contractor, 3. Intern"<<endl;
-        cout<<"Your choice: ";
-        InParam>>XyzEmployeeParam.mType;
-        cout<<endl;
+        XyzEmployeeParam.mType = XyzEmployeeEnums::Contractor;
         cout << "Enter Status: 1. Active, 2. Inactive, 3. Resigned"<<endl;
         cout<<"Your choice: ";
         InParam>>XyzEmployeeParam.mStatus;
@@ -335,23 +315,16 @@ ostream& operator<<(ostream& OutParam, const XyzInternEmployee& XyzFullTimeEmplo
 
 istream& operator>>(istream& InParam, XyzInternEmployee& XyzEmployeeParam) {
         cout << "Enter Name: ";
-        InParam.ignore();
         getline(InParam, XyzEmployeeParam.mName);
-        cout << "Enter Employee ID: ";
-        InParam.ignore();
-        getline(InParam, XyzEmployeeParam.mEmpID);
-        cout << "Enter Gender: ";
+        cout << "Enter Gender: 1. Male, 2. Female"<<endl;
+        cout << "Your choice: ";
         InParam >> XyzEmployeeParam.mGender;
+        InParam.ignore();        
         cout << "Enter Date of Birth: ";
-        InParam.ignore();
         getline(InParam, XyzEmployeeParam.mDOB);
         cout << "Enter Date of Joining: ";
-        InParam.ignore();
         getline(InParam, XyzEmployeeParam.mDOJ);
-        cout << "Enter Type: 1. Full-Time, 2. Contractor, 3. Intern"<<endl;
-        cout<<"Your choice: ";
-        InParam>>XyzEmployeeParam.mType;
-        cout<<endl;
+        XyzEmployeeParam.mType = XyzEmployeeEnums::Intern;
         cout << "Enter Status: 1. Active, 2. Inactive, 3. Resigned"<<endl;
         cout<<"Your choice: ";
         InParam>>XyzEmployeeParam.mStatus;
