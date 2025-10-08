@@ -3,7 +3,7 @@
 
 #include "XyzEmployeeIF.H"
 
-//////////////// Employee Interface ////////////////
+//////////////// Employee Base Class ////////////////
 class XyzEmployee : public XyzEmployeeIF {
 
     protected:
@@ -16,6 +16,7 @@ class XyzEmployee : public XyzEmployeeIF {
         string mDOJ;
 
     public:
+        // Parameterized Constructor
         XyzEmployee(string name, string empID, int type, int status, int gender, string DOB, string DOJ) :
             mName(name),
             mEmpID(empID),
@@ -24,28 +25,30 @@ class XyzEmployee : public XyzEmployeeIF {
             mGender(gender),
             mDOB(DOB),
             mDOJ(DOJ) {}    
+        
+        //Default Constructor
         XyzEmployee() : XyzEmployee("DefaultName", "-1", -1, -1, -1, "1999-01-01", "1999-01-01"){}        
+
         virtual ~XyzEmployee() override;
 
         string getEmployeeName() override;
-        void setEmployeeName(string);
+        void setEmployeeName(string) override;
         string getEmployeeID() override;
-        void setEmployeeID(string);
+        void setEmployeeID(string) override;
         int getEmployeeType() override;
         void setEmployeeType(int) override;
         int getEmployementStatus() override;
         void setEmployementStatus(int) override;
         int getEmployeeGender() override;
-        void setEmployeeGender(int);
+        void setEmployeeGender(int) override;
         string getEmployeeDOB() override;
-        void setEmployeeDOB(string);
+        void setEmployeeDOB(string) override;
         string getEmployeeDOJ() override;
-        void setEmployeeDOJ(string);
+        void setEmployeeDOJ(string) override;
+
         virtual void printEmployeeDetails() override;
         friend ostream& operator<<(ostream&, const XyzEmployee&);
         friend istream& operator>>(istream& InParam, XyzEmployee& InputParam);
-
-
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,17 +60,19 @@ class XyzFullTimeEmployee : public XyzEmployee {
         int mLeavesAvailed;
         int mLeavesLeft;
     public:
+        // Parameterized Constructor
         XyzFullTimeEmployee(string name, string empID, int type, int status, int gender, string DOB, string DOJ, int leavesLeft) : 
             XyzEmployee::XyzEmployee(name, empID, type, status, gender, DOB, DOJ),
             mLeavesAvailed(0),
             mLeavesLeft(leavesLeft) {}
-
+        // Default Constructor
         XyzFullTimeEmployee() : 
             XyzEmployee::XyzEmployee(),
             mLeavesAvailed(0),
             mLeavesLeft(0) {}
 
         virtual ~XyzFullTimeEmployee() override;
+
         virtual void printEmployeeDetails() override;
         int getLeavesAvailed();
         int getLeavesLeft();
@@ -86,9 +91,11 @@ class XyzContractorEmployee : public XyzEmployee {
     private:
         int mAgency;
     public:
+        // Parameterized Constructor
         XyzContractorEmployee(string name, string empID, int type, int status, int gender, string DOB, string DOJ, int Agency) : 
             XyzEmployee::XyzEmployee(name, empID, type, status, gender, DOB, DOJ),
             mAgency(Agency) {}
+        // Default Constructor
         XyzContractorEmployee() : 
             XyzEmployee::XyzEmployee(),
             mAgency(-1) {}
@@ -109,10 +116,12 @@ class XyzInternEmployee : public XyzEmployee {
         int mCollege;
         int mBranch;
     public:
+        // Parameterized Constructor
         XyzInternEmployee(string name, string empID, int type, int status, int gender, string DOB, string DOJ, int college, int branch) : 
             XyzEmployee::XyzEmployee(name, empID, type, status, gender, DOB, DOJ),
             mCollege(college),
             mBranch(branch) {}
+        // Default Constructor
         XyzInternEmployee() : 
             XyzEmployee::XyzEmployee(),
             mCollege(-1),
@@ -127,7 +136,6 @@ class XyzInternEmployee : public XyzEmployee {
         string getCollegeString();
         friend ostream& operator<<(ostream&, const XyzInternEmployee&);
         friend istream& operator>>(istream& InParam, XyzInternEmployee& InputParam);
-
 };
 ////////////////////////////////////////////////////////////////////////////////////////////////
 

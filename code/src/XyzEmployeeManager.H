@@ -8,7 +8,7 @@ class XyzEmployeeManager {
         EDLL mEmployeeDLL;
         EDLL mResignedDLL;
 
-        int mNextNumericID;
+        int mNextNumericID = 1; // Incremental number to assign Employee IDs
 
     public:
         void addEmployee(XyzEmployee*);
@@ -41,7 +41,5 @@ class XyzEmployeeManager {
         int readIntSafely() const;
         void pauseForEnter() const;
 };
-
-
 
 #endif // XYZEMPLOYEEMANAGER_H_

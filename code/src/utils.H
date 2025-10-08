@@ -5,8 +5,10 @@
 
 using namespace std;
 
+// Standard leaves allotted to a new Full-Time Employee
 #define STANDARD_LEAVES 22
 
+// Node for EDLL
 template<class S>
 struct Node {
             S mData;
@@ -46,7 +48,9 @@ namespace DequeMockMenu{
     };
 }
 
+// XyzEmployee Enumerations
 namespace XyzEmployeeEnums{
+    // XyzEmployee Common Enums
     enum EmployeeStatus{
         Active = 1,
         Inactive,
@@ -96,6 +100,7 @@ namespace XyzEmployeeEnums{
     };
 }
 
+// Employee Manager Enumerations
 namespace EMSMenu{
     enum MainMenuEnums{
         ExitMain = -1,

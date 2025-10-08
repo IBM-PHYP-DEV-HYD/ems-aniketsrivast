@@ -61,9 +61,9 @@ if(empty()){
     --mSize_Deque;
 }
 
+// Print all nodes in EDLL
 void EDLL::printEDLL(){
     if(this->empty()){
-        // cout<<"Deque is empty"<<endl;
     }
     else{
         cout << "---------------------------------------------" << endl;

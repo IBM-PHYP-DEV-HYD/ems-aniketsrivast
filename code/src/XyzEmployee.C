@@ -4,64 +4,80 @@
 
 //////////////// XyzEmployee ////////////////
 
+// Default Destructor
 XyzEmployee::~XyzEmployee() = default;
 
+// Returns Employee Name
 string XyzEmployee::getEmployeeName(){
     return mName;
 }
 
+// Set Employee Name
 void XyzEmployee::setEmployeeName(string nameParam){
     mName = nameParam;
 }
 
+// Returns Employee ID
 string XyzEmployee::getEmployeeID(){
     return mEmpID;
 }
 
+// Set Employee ID
 void XyzEmployee::setEmployeeID(string IDParam){
     mEmpID = IDParam;
 }
 
+// Returns Employee Type (Full Time, Contractor, Intern)
 int XyzEmployee::getEmployeeType(){
     return mType;
 }
 
+// Set Employee Type (Full Time, Contractor, Intern) 
 void XyzEmployee::setEmployeeType(int typeParam){
     mType = typeParam;
 }
 
+// Returns Employee Status (Active, Inactive, Resigned)
 int XyzEmployee::getEmployementStatus(){
     return mStatus;
 }
 
+// Set Employee Status (Active, Inactive, Resigned)
 void XyzEmployee::setEmployementStatus(int statusParam){
     mStatus = statusParam;
 }
 
+// Returns Employee Gender (Male, Female)
 int XyzEmployee::getEmployeeGender(){
     return (mGender);
 }
 
+// Set Employee Gender (Male, Female)
 void XyzEmployee::setEmployeeGender(int genderParam){
     mGender = genderParam;
 }
 
+// Returns Employee DOB
 string XyzEmployee::getEmployeeDOB(){
     return mDOB;
 }
 
+// Set Employee DOB
 void XyzEmployee::setEmployeeDOB(string dobParam){
     mDOB = dobParam;
 }
 
+// Returns Employee DOJ
 string XyzEmployee::getEmployeeDOJ(){
     return mDOJ;
 }
 
+// Set Employee DOJ
 void XyzEmployee::setEmployeeDOJ(string dojParam){
     mDOJ = dojParam;
 }
 
+// Prints Employee details
 void XyzEmployee::printEmployeeDetails(){
     cout<<"Employee Name: "<<mName
     <<",\nGender: "<<((mGender==XyzEmployeeEnums::Male)?"Male":"Female")<<
@@ -84,6 +100,7 @@ ostream& operator<<(ostream& OutParam, const XyzEmployee& XyzEmployeeParam){
         return OutParam;
 }
 
+// Overloading >> input stream operator to input XyzEmployee object
 istream& operator>>(istream& InParam, XyzEmployee& XyzEmployeeParam) {
         cout << "Enter Name: ";
         getline(InParam, XyzEmployeeParam.mName);
@@ -108,16 +125,20 @@ istream& operator>>(istream& InParam, XyzEmployee& XyzEmployeeParam) {
 
 //////////////// XyzFullTimeEmployee ////////////////
 
+//Default Destructor
 XyzFullTimeEmployee::~XyzFullTimeEmployee() = default;
 
+// Returns leaves availed
 int XyzFullTimeEmployee::getLeavesAvailed(){
     return mLeavesAvailed;
 }
 
+// Returns leaves left
 int XyzFullTimeEmployee::getLeavesLeft(){
     return mLeavesLeft;
 }
 
+// Avail leaves from existing pool
 void XyzFullTimeEmployee::availLeaves(int leavesParam){
     if(leavesParam <= mLeavesLeft){
         mLeavesAvailed += leavesParam;
@@ -128,10 +149,12 @@ void XyzFullTimeEmployee::availLeaves(int leavesParam){
     }
 }
 
+// Update leaves left
 void XyzFullTimeEmployee::updateLeavesLeft(int leavesParam){
     mLeavesLeft += leavesParam;
 }
 
+// Print Full Time Employee details
 void XyzFullTimeEmployee::printEmployeeDetails() {
     cout<<"Employee Name: "<<mName
     <<",\nGender: "<<((mGender==1)?"Male":"Female")<<
@@ -143,6 +166,7 @@ void XyzFullTimeEmployee::printEmployeeDetails() {
     <<",\nLeaves Left: "<<mLeavesLeft<<endl;
 }
 
+// Overloading << output stream operator to print XyzFullTimeEmployee object
 ostream& operator<<(ostream& OutParam, const XyzFullTimeEmployee& XyzFullTimeEmployeeParam){
     OutParam<<"Employee Name: "<<XyzFullTimeEmployeeParam.mName
     <<",\nGender: "<<((XyzFullTimeEmployeeParam.mGender==XyzEmployeeEnums::Male)?"Male":"Female")<<
@@ -155,6 +179,7 @@ ostream& operator<<(ostream& OutParam, const XyzFullTimeEmployee& XyzFullTimeEmp
     return OutParam;
 }
 
+// Overloading >> input stream operator to input XyzFullTimeEmployee object
 istream& operator>>(istream& InParam, XyzFullTimeEmployee& XyzEmployeeParam) {
         cout << "Enter Name: ";
         getline(InParam, XyzEmployeeParam.mName);
@@ -175,22 +200,24 @@ istream& operator>>(istream& InParam, XyzFullTimeEmployee& XyzEmployeeParam) {
         return InParam;
 }
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////// XyzContractorEmployee ////////////////
 
-
+// Default Destructor
 XyzContractorEmployee::~XyzContractorEmployee() = default;
 
+// Returns Agency of Contractor
 int XyzContractorEmployee::getAgency(){
     return mAgency;
 }
 
+// Set Agency of Contractor
 void XyzContractorEmployee::setAgency(int agencyParam){
     mAgency = agencyParam;
 }
 
+// Print Contractor Employee details
 void XyzContractorEmployee::printEmployeeDetails() {
     cout<<"Employee Name: "<<mName
     <<",\nGender: "<<((mGender==XyzEmployeeEnums::Male)?"Male":"Female")<<
@@ -202,6 +229,7 @@ void XyzContractorEmployee::printEmployeeDetails() {
     <<",\nAgency: "<<((mAgency==XyzEmployeeEnums::Avengers)?"Avengers":((mAgency==XyzEmployeeEnums::JusticeLeague)?"Justice League":"X-Men"))<<endl;
 }
 
+// Overloading << output stream operator to print XyzContractorEmployee object
 ostream& operator<<(ostream& OutParam, const XyzContractorEmployee& XyzFullTimeEmployeeParam){
     OutParam<<"Employee Name: "<<XyzFullTimeEmployeeParam.mName
     <<",\nGender: "<<((XyzFullTimeEmployeeParam.mGender==XyzEmployeeEnums::Male)?"Male":"Female")<<
@@ -214,6 +242,7 @@ ostream& operator<<(ostream& OutParam, const XyzContractorEmployee& XyzFullTimeE
     return OutParam;
 }
 
+// Overloading >> input stream operator to input XyzContractorEmployee object
 istream& operator>>(istream& InParam, XyzContractorEmployee& XyzEmployeeParam) {
         cout << "Enter Name: ";
         getline(InParam, XyzEmployeeParam.mName);
@@ -243,22 +272,27 @@ istream& operator>>(istream& InParam, XyzContractorEmployee& XyzEmployeeParam) {
 
 XyzInternEmployee::~XyzInternEmployee() = default;
 
+// Returns College of Intern
 int XyzInternEmployee::getCollege(){
     return mCollege;
 }
 
+// Set College of Intern
 void XyzInternEmployee::setCollege(int collegeParam){
     mCollege = collegeParam;
 }
 
+// Returns Branch of Intern
 int XyzInternEmployee::getBranch(){
     return mBranch;
 }
 
+// Set College of Intern
 void XyzInternEmployee::setBranch(int branchParam){
     mBranch = branchParam;
 }
 
+// Returns College of Intern in String
 string XyzInternEmployee::getCollegeString(){
     switch(mCollege){
         case XyzEmployeeEnums::IITD:
@@ -288,6 +322,7 @@ string XyzInternEmployee::getCollegeString(){
     }
 }
 
+// Print Intern Employee details
 void XyzInternEmployee::printEmployeeDetails() {
     cout<<"Employee Name: "<<mName
     <<",\nGender: "<<((mGender==XyzEmployeeEnums::Male)?"Male":"Female")<<
@@ -300,6 +335,7 @@ void XyzInternEmployee::printEmployeeDetails() {
     <<",\nBranch: "<<((mBranch==XyzEmployeeEnums::CSE)?"CSE":((mBranch==XyzEmployeeEnums::CSEIT)?"CSEIT":"ECE"))<<endl;
 }
 
+// Overloading << output stream operator to print XyzInternEmployee object
 ostream& operator<<(ostream& OutParam, const XyzInternEmployee& XyzFullTimeEmployeeParam){
     OutParam<<"Employee Name: "<<XyzFullTimeEmployeeParam.mName
     <<",\nGender: "<<((XyzFullTimeEmployeeParam.mGender==XyzEmployeeEnums::Male)?"Male":"Female")<<
@@ -313,6 +349,7 @@ ostream& operator<<(ostream& OutParam, const XyzInternEmployee& XyzFullTimeEmplo
     return OutParam;
 }
 
+// Overloading >> input stream operator to input XyzInternEmployee object
 istream& operator>>(istream& InParam, XyzInternEmployee& XyzEmployeeParam) {
         cout << "Enter Name: ";
         getline(InParam, XyzEmployeeParam.mName);

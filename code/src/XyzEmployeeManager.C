@@ -1,5 +1,6 @@
 #include "XyzEmployeeManager.H"
 
+// Add new employee to EDLL
 void XyzEmployeeManager::addEmployee(XyzEmployee* employeeParam){
     if(employeeParam->getEmployementStatus() == XyzEmployeeEnums::Resigned){
         XyzEmployee* sMinimalObject = new XyzEmployee();
@@ -18,6 +19,7 @@ void XyzEmployeeManager::addEmployee(XyzEmployee* employeeParam){
     }
 }
 
+// Remove Employee from Current employee and move to Resigned employees
 bool XyzEmployeeManager::removeEmployee(string employeeIDParam){
     if (mEmployeeDLL.empty()) {
         cout << "No Active/Inactive employees exist.\n";
@@ -54,6 +56,7 @@ bool XyzEmployeeManager::removeEmployee(string employeeIDParam){
     return false;
 }
 
+// Print Full Time Employees
 void XyzEmployeeManager::printFullTimeEmployees(){
     if (mEmployeeDLL.empty()) {
         cout << "No current employees" << endl;
@@ -74,6 +77,7 @@ void XyzEmployeeManager::printFullTimeEmployees(){
     }
 }
 
+// Print Contractor Employees
 void XyzEmployeeManager::printContractorEmployees(){
     if (mEmployeeDLL.empty()) {
         cout << "No current employees" << endl;
@@ -94,6 +98,7 @@ void XyzEmployeeManager::printContractorEmployees(){
     }
 }
 
+// Print Intern Employees
 void XyzEmployeeManager::printInternEmployees(){
     if (mEmployeeDLL.empty()) {
         cout << "No current employees" << endl;
@@ -114,6 +119,7 @@ void XyzEmployeeManager::printInternEmployees(){
     }
 }
 
+// Print Male Employees
 void XyzEmployeeManager::printMaleEmployees(){
     if (mEmployeeDLL.empty()) {
          cout << "No current employees\n"; 
@@ -134,6 +140,7 @@ void XyzEmployeeManager::printMaleEmployees(){
     }
 }
 
+// Print Female Employees
 void XyzEmployeeManager::printFemaleEmployees(){
     if (mEmployeeDLL.empty()) {
          cout << "No current employees\n"; 
@@ -154,20 +161,24 @@ void XyzEmployeeManager::printFemaleEmployees(){
     }
 }
 
+// Print Current (Active/Inactive) Employees
 void XyzEmployeeManager::printCurrentEmployees(){
     mEmployeeDLL.printEDLL();
 }
 
+// Print Resigned Employees
 void XyzEmployeeManager::printResignedEmployees(){
     mResignedDLL.printEDLL();
 }
 
+// Print All employees
 void XyzEmployeeManager::printAllEmployees(){
     mEmployeeDLL.printEDLL();
     mResignedDLL.printEDLL();
 
 }
 
+// Print Employee by name
 void XyzEmployeeManager::getEmployeeByName(string nameParam){
     bool sFoundFlag = false;
     int sIndex = 0;
@@ -192,6 +203,7 @@ void XyzEmployeeManager::getEmployeeByName(string nameParam){
     }
 }
 
+// Print Employee by Employee ID
 void XyzEmployeeManager::getEmployeeByID(string empIDParam){
     int sIndex = 0;
     for (sIndex = 0; sIndex < mEmployeeDLL.size(); ++sIndex) {
@@ -211,6 +223,7 @@ void XyzEmployeeManager::getEmployeeByID(string empIDParam){
     cout << "Employee ID " << empIDParam << " not found." << endl;
 }
 
+// Convert any employe to Full Time
 bool XyzEmployeeManager::convertToFullTime(string employeeID){
      if (mEmployeeDLL.empty()) {
         cout << "No current employees exist.\n";
@@ -251,6 +264,7 @@ bool XyzEmployeeManager::convertToFullTime(string employeeID){
     return false;
 }
 
+// Add leaves to Full-Time employee
 void XyzEmployeeManager::addLeaves(int leavesParam){
   if (mEmployeeDLL.empty()) {
         cout << "No current employees exist.\n";
@@ -269,14 +283,14 @@ void XyzEmployeeManager::addLeaves(int leavesParam){
     cout << "Added " << leavesParam << " leaves to " << sCountFLag << " Full-Time employees.\n";
 }
 
-// Simple ID generator: XYZ + 4-digit zero-padded + typeCode (F/C/I)
+// ID Generator
 string XyzEmployeeManager::generateNextEmployeeID(char typeParam) {
     string sEmployeeID = "XYZ" + std::to_string(mNextNumericID) + string(1, typeParam);
     ++mNextNumericID;
     return sEmployeeID;
 }
 
-// create random employee (example)
+// Create Employee randomly
 XyzEmployee* XyzEmployeeManager::createEmployeeRandom() {
     int sRandomType = (rand() % 3) + 1; // 1..3
     XyzEmployee* sEmployee = nullptr;
@@ -321,7 +335,7 @@ XyzEmployee* XyzEmployeeManager::createEmployeeRandom() {
     return sEmployee;
 }
 
-// create from interactive input (reads base fields then prompts for derived fields)
+// Create Employee manually
 XyzEmployee* XyzEmployeeManager::createEmployeeFromInput() {
     cout << "Choose type: 1. Full-Time  2. Contractor  3. Intern\nYour choice: ";
     int sTypeChoice = XyzEmployeeEnums::FullTime;
@@ -335,38 +349,23 @@ XyzEmployee* XyzEmployeeManager::createEmployeeFromInput() {
     if (sTypeChoice == XyzEmployeeEnums::FullTime) {
         auto* sFullTimeEmployee = new XyzFullTimeEmployee();
         cin >> *sFullTimeEmployee; // expects operator>> for derived / base fields
-        // if (sFullTimeEmployee->getEmployeeID().empty()) {
-            sFullTimeEmployee->setEmployeeID(generateNextEmployeeID('F'));
-        // }
+        sFullTimeEmployee->setEmployeeID(generateNextEmployeeID('F'));
         sEmployee = sFullTimeEmployee;
     } else if (sTypeChoice == XyzEmployeeEnums::Contractor) {
         auto* sContractor = new XyzContractorEmployee();
         cin >> *sContractor;
-        // if (sContractor->getEmployeeID().empty()) {
-            sContractor->setEmployeeID(generateNextEmployeeID('C'));
-        // }
+        sContractor->setEmployeeID(generateNextEmployeeID('C'));
         sEmployee = sContractor;
     } else {
         auto* sIntern = new XyzInternEmployee();
         cin >> *sIntern;
-        // cout << "Choose College (1..7):\n1.IITD 2.IITM 3.IITK 4.IITH 5.NITW 6.NITT 7.IIITH\nChoice: ";
-        // int sCollege; 
-        // cin >> sCollege; 
-        // cin.ignore();
-        // sIntern->setCollege(sCollege);
-        // cout << "Choose Branch (1..3): 1.CSE 2.CSIT 3.ECE\nChoice: ";
-        // int sBranch;
-        // cin >> sBranch; 
-        // cin.ignore();
-        // sIntern->setBranch(sBranch);
-        // if (sIntern->getEmployeeID().empty()) {
-            sIntern->setEmployeeID(generateNextEmployeeID('I'));
-        // }
+        sIntern->setEmployeeID(generateNextEmployeeID('I'));
         sEmployee = sIntern;
     }
     return sEmployee;
 }
 
+// Read integer by ignoring any spaces or newlines present
 int XyzEmployeeManager::readIntSafely() const {
     int sInput;
     while (!(cin >> sInput)) {
@@ -378,11 +377,13 @@ int XyzEmployeeManager::readIntSafely() const {
     return sInput;
 }
 
+// Pause buffer in mid
 void XyzEmployeeManager::pauseForEnter() const {
     cout << "\nPress Enter to continue...";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
+// Main Employee Manager
 void XyzEmployeeManager::mainMenu() {
     while (true) {
         cout << "---------------------------------------------------------------------------------\n";
@@ -447,6 +448,7 @@ void XyzEmployeeManager::mainMenu() {
     }
 }
 
+// Addition Sub Menu
 void XyzEmployeeManager::subAddMenu() {
     while(true) {
         cout << "---------------------------------------------------------------------------------\n";
@@ -478,6 +480,7 @@ void XyzEmployeeManager::subAddMenu() {
     }
 }
 
+// Summary Sub Menu
 void XyzEmployeeManager::subSummaryMenu() {
     while(true) {
         cout << "---------------------------------------------------------------------------------\n";
@@ -577,6 +580,7 @@ void XyzEmployeeManager::subSummaryMenu() {
     }
 }
 
+// Do something else Sub Menu
 void XyzEmployeeManager::subOthersMenu() {
     while(true) {
         cout << "---------------------------------------------------------------------------------\n";
