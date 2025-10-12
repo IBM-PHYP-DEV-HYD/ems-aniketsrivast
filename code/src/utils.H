@@ -116,7 +116,7 @@ namespace EMSMenu{
     enum DetailsMenuEnums{
         ExitDetails = -1,
         AllDetails = 1,
-        DetalsByType,
+        DetailsByType,
         DetailsByGender,
         DetailsByStatus,
         DetailsByID    

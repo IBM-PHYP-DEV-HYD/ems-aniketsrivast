@@ -1,4 +1,7 @@
 #include "XyzEmployeeManager.H"
+#include "XyzFullTimeEmployee.H"
+#include "XyzContractorEmployee.H"
+#include "XyzInternEmployee.H"
 
 // Add new employee to EDLL
 void XyzEmployeeManager::addEmployee(XyzEmployee* employeeParam){
@@ -398,11 +401,6 @@ void XyzEmployeeManager::mainMenu() {
         cout << "Your Choice: ";
         int sInputChoice = readIntSafely();
 
-        if (sInputChoice == EMSMenu::ExitMain) { 
-            cout << "Exiting...\n"; 
-            break; 
-        }
-
         switch (sInputChoice) {
             case EMSMenu::AddMenu: 
             {
@@ -439,6 +437,12 @@ void XyzEmployeeManager::mainMenu() {
                 break;
             }
 
+            case EMSMenu::ExitMain:
+            {
+                cout << "Exiting...\n"; 
+                return; 
+            }
+
             default: 
             {
                 cout << "Invalid input. Please try again\n";
@@ -461,21 +465,34 @@ void XyzEmployeeManager::subAddMenu() {
         cout << "---------------------------------------------------------------------------------\n";
         cout << "Your choice: ";
         int sInputChoice = readIntSafely();
-        if (sInputChoice == EMSMenu::ExitAdd) {
-            break;
-        }
-        if (sInputChoice == EMSMenu::AddRandom) {
-            XyzEmployee* sEmployee = createEmployeeRandom();
-            addEmployee(sEmployee);
-            cout << "Random employee added.\n";
-            pauseForEnter();
-        } else if (sInputChoice == EMSMenu::AddManually) {
-            XyzEmployee* sEmployee = createEmployeeFromInput();
-            addEmployee(sEmployee);
-            cout << "Employee added.\n";
-            pauseForEnter();
-        } else {
-            cout << "Invalid option. Try again.\n";
+
+        switch(sInputChoice){
+            case EMSMenu::AddRandom:
+            {
+                XyzEmployee* sEmployee = createEmployeeRandom();
+                addEmployee(sEmployee);
+                cout << "Random employee added.\n";
+                pauseForEnter();                
+            }
+
+            case EMSMenu::AddManually:
+            {
+                XyzEmployee* sEmployee = createEmployeeFromInput();
+                addEmployee(sEmployee);
+                cout << "Employee added.\n";
+                pauseForEnter();
+            }
+
+            case EMSMenu::ExitAdd:
+            {
+                return;
+            }
+
+            default: 
+            {
+                cout << "Invalid input. Please try again\n";
+                break;
+            }
         }
     }
 }
@@ -496,9 +513,6 @@ void XyzEmployeeManager::subSummaryMenu() {
         cout << "---------------------------------------------------------------------------------\n";
         cout << "Your choice: ";
         int sInputChoice = readIntSafely();
-        if (sInputChoice == EMSMenu::ExitDetails) {
-            break;
-        }
 
         switch (sInputChoice) {
             case EMSMenu::AllDetails:
@@ -508,7 +522,7 @@ void XyzEmployeeManager::subSummaryMenu() {
                 break;
             }
 
-            case EMSMenu::DetalsByType: 
+            case EMSMenu::DetailsByType: 
             {
                 cout << "Choose Employee type: 1.Full-Time 2.Contractor 3.Intern\nChoice: ";
                 int sInputType = readIntSafely();
@@ -527,6 +541,7 @@ void XyzEmployeeManager::subSummaryMenu() {
                 pauseForEnter();
                 break;
             }
+
             case EMSMenu::DetailsByGender: {
                 cout << "Choose gender: 1.Male 2.Female\nChoice: ";
                 int sInputGender = readIntSafely();
@@ -542,6 +557,7 @@ void XyzEmployeeManager::subSummaryMenu() {
                 pauseForEnter();
                 break;
             }
+
             case EMSMenu::DetailsByStatus: {
                 cout << "Choose status: 1.Active/2.Inactive/3.Resigned\nChoice: ";
                 int sInputStatus = readIntSafely();
@@ -557,6 +573,7 @@ void XyzEmployeeManager::subSummaryMenu() {
                 pauseForEnter();
                 break;
             }
+
             case EMSMenu::DetailsByID: {
                 cout << "Enter Employee ID to display details: ";
                 string sEmployeeID; 
@@ -573,6 +590,12 @@ void XyzEmployeeManager::subSummaryMenu() {
                 pauseForEnter();
                 break;
             }
+
+            case EMSMenu::ExitDetails:
+            {
+                return; 
+            }
+
             default:
                 cout << "Invalid choice.\n";
                 break;
@@ -595,9 +618,6 @@ void XyzEmployeeManager::subOthersMenu() {
         cout << "---------------------------------------------------------------------------------\n";
         cout << "Your choice: ";
         int sInputChoice = readIntSafely();
-        if (sInputChoice == EMSMenu::ExitOther) {
-            break;
-        }
 
         switch (sInputChoice) {
             case EMSMenu::AddLeaves: 
@@ -608,6 +628,7 @@ void XyzEmployeeManager::subOthersMenu() {
                 pauseForEnter();
                 break;
             }
+
             case EMSMenu::ConvertToFullTime: 
             {
                 cout << "Enter Employee ID to convert to Full-Time: ";
@@ -625,6 +646,7 @@ void XyzEmployeeManager::subOthersMenu() {
                 pauseForEnter();
                 break;
             }
+
             case EMSMenu::SearchByID: 
             {
                 cout << "Enter Employee ID to search: ";
@@ -642,6 +664,7 @@ void XyzEmployeeManager::subOthersMenu() {
                 pauseForEnter();
                 break;
             }
+
             case EMSMenu::SearchByName: 
             {
                 cout << "Enter full name to search: ";
@@ -656,6 +679,11 @@ void XyzEmployeeManager::subOthersMenu() {
                 else cout << "No name entered.\n";
                 pauseForEnter();
                 break;
+            }
+
+            case EMSMenu::ExitOther:
+            {
+                return;
             }
 
             default:
