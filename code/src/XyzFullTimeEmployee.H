@@ -2,7 +2,6 @@
 #define XYZFULLTIMEEMPLOYEE_H_
 
 #include "XyzEmployee.H"
-//////////////// Full Time Employee ////////////////
 
 class XyzFullTimeEmployee : public XyzEmployee {
     private:
