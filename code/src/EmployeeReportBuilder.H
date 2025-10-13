@@ -31,8 +31,6 @@ class EmployeeReportBuilder {
         EmployeeReportBuilder& clearFilters();
 
         void print() const;
-        void forEach(std::function<void(XyzEmployee*)>) const;
-
 };
 
 #endif // EMPLOYEEREPORTBUILDER_H_

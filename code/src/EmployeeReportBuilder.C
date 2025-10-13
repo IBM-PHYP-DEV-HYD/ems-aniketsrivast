@@ -56,49 +56,36 @@ bool EmployeeReportBuilder::matchesFilters(XyzEmployee* employeeParam) const {
     return true;
 }
 
-void EmployeeReportBuilder::forEach(function<void(XyzEmployee*)> functionParam) const {
-    if (mIncludeCurrentFlag) {
-        int sCurrentSize = mEmployeeManager.getCurrentSize();
-        int sIndex = 0;
-        for (sIndex = 0; sIndex < sCurrentSize; ++sIndex) {
-            XyzEmployee* sXyzEmployee = mEmployeeManager.getCurrentEmployeeAt(sIndex);
-            if (sXyzEmployee && matchesFilters(sXyzEmployee)) {
-                functionParam(sXyzEmployee);
-            }
-        }
-    }
-    if (mIncludeCurrentFlag) {
-        int sResignedSize = mEmployeeManager.getResignedSize();
-        int sIndex = 0;
-        for (sIndex = 0; sIndex < sResignedSize; ++sIndex) {
-            XyzEmployee* sXyzEmployee = mEmployeeManager.getResignedEmployeeAt(sIndex);
-            if (sXyzEmployee && matchesFilters(sXyzEmployee)) {
-                functionParam(sXyzEmployee);
-            }
-        }
-    }
-}
-
 void EmployeeReportBuilder::print() const {
-    cout << "--------------------------------------------------\n";
-    cout << "Employee Report\n";
-    cout << "Filters: "
-         << (mGenderFilter ? (mGenderFilter==XyzEmployeeEnums::Male? "Male" : "Female") : "Any Gender")
-         << ", " << (mTypeFilter ? (mTypeFilter==XyzEmployeeEnums::FullTime? "FullTime" : (mTypeFilter==XyzEmployeeEnums::Contractor? "Contractor":"Intern")) : "Any Type")
-         << ", " << (mStatusFilter ? (mStatusFilter==XyzEmployeeEnums::Active? "Active" : (mStatusFilter==XyzEmployeeEnums::Inactive? "Inactive":"Resigned")) : "Any Status")
-         << "\n";
-    cout << (mIncludeCurrentFlag ? "Including: Active/Inactive" : "")
-         << (mIncludeResignedFlag ? (mIncludeCurrentFlag ? " and Resigned" : "Including: Resigned") : "")
-         << "\n";
-    cout << "--------------------------------------------------\n";
-
     int sCount = 0;
-    forEach([&sCount](XyzEmployee* sXyzEmployee){
-        ++sCount;
-        sXyzEmployee->printEmployeeDetails();
-        cout << "--------------------------------------------------\n";
-    });
-
-    if (sCount == 0) cout << "[No employees match the criteria]\n";
-    else cout << "Total matched: " << sCount << "\n";
+    if (mIncludeCurrentFlag) {
+        int sIndex = 0;
+        for (sIndex = 0; sIndex < mEmployeeManager.getCurrentSize(); sIndex++) {
+            XyzEmployee* sXyzEmployee = mEmployeeManager.getCurrentEmployeeAt(sIndex);
+            if (!sXyzEmployee){
+                continue;
+            }
+            if (!matchesFilters(sXyzEmployee)){
+                continue;
+            }
+            sCount++;
+            sXyzEmployee->printEmployeeDetails();
+            cout << "--------------------------------------------------\n";
+        }
+    }
+    if (mIncludeResignedFlag) {
+        int sIndex = 0;
+        for (int sIndex = 0; sIndex < mEmployeeManager.getResignedSize(); sIndex++) {
+            XyzEmployee* sXyzEmployee = mEmployeeManager.getResignedEmployeeAt(sIndex);
+            if (!sXyzEmployee){
+                continue;
+            }
+            if (!matchesFilters(sXyzEmployee)){
+                continue;
+            }
+            sCount++;
+            sXyzEmployee->printEmployeeDetails();
+            cout << "--------------------------------------------------\n";
+        }
+    }
 }

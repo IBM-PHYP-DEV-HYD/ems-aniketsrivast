@@ -500,112 +500,6 @@ void XyzEmployeeManager::subAddMenu() {
     }
 }
 
-// // Summary Sub Menu
-// void XyzEmployeeManager::subSummaryMenu() {
-//     while(true) {
-//         cout << "---------------------------------------------------------------------------------\n";
-//         cout << "|                         Employee Management System                            |\n";
-//         cout << "---------------------------------------------------------------------------------\n";
-//         cout << "| Get Employee details:                                                         |\n";
-//         cout << "|     1. All employees summary                                                  |\n";
-//         cout << "|     2. Employee summary (F/C/I)                                               |\n";
-//         cout << "|     3. Employee summary (M/F)                                                 |\n";
-//         cout << "|     4. Employee summary (A/I/R)                                               |\n";
-//         cout << "|     5. Display employee details                                               |\n";
-//         cout << "|    (Enter -1 to go back to previous menu)                                     |\n";
-//         cout << "---------------------------------------------------------------------------------\n";
-//         cout << "Your choice: ";
-//         int sInputChoice = readIntSafely();
-
-//         switch (sInputChoice) {
-//             case EMSMenu::AllDetails:
-//             {
-//                 printAllEmployees(); 
-//                 pauseForEnter(); 
-//                 break;
-//             }
-
-//             case EMSMenu::DetailsByType: 
-//             {
-//                 cout << "Choose Employee type: 1.Full-Time 2.Contractor 3.Intern\nChoice: ";
-//                 int sInputType = readIntSafely();
-//                 if (sInputType == XyzEmployeeEnums::FullTime) {
-//                     printFullTimeEmployees();
-//                 }
-//                 else if (sInputType == XyzEmployeeEnums::Contractor) {
-//                     printContractorEmployees();
-//                 }
-//                 else if (sInputType == XyzEmployeeEnums::Intern) {
-//                     printInternEmployees();
-//                 }
-//                 else {
-//                     cout << "Invalid type\n";
-//                 }
-//                 pauseForEnter();
-//                 break;
-//             }
-
-//             case EMSMenu::DetailsByGender: {
-//                 cout << "Choose gender: 1.Male 2.Female\nChoice: ";
-//                 int sInputGender = readIntSafely();
-//                 if (sInputGender == XyzEmployeeEnums::Male) {
-//                     printMaleEmployees();
-//                 }
-//                 else if (sInputGender == XyzEmployeeEnums::Female) {
-//                     printFemaleEmployees();
-//                 }
-//                 else {
-//                     cout << "Invalid gender\n";
-//                 }
-//                 pauseForEnter();
-//                 break;
-//             }
-
-//             case EMSMenu::DetailsByStatus: {
-//                 cout << "Choose status: 1.Active/2.Inactive/3.Resigned\nChoice: ";
-//                 int sInputStatus = readIntSafely();
-//                 if (sInputStatus == XyzEmployeeEnums::Active || sInputStatus == XyzEmployeeEnums::Inactive) {
-//                     printCurrentEmployees();
-//                 }
-//                 else if (sInputStatus == XyzEmployeeEnums::Resigned) {
-//                     printResignedEmployees();
-//                 }
-//                 else {
-//                     cout << "Invalid status\n";
-//                 }
-//                 pauseForEnter();
-//                 break;
-//             }
-
-//             case EMSMenu::DetailsByID: {
-//                 cout << "Enter Employee ID to display details: ";
-//                 string sEmployeeID; 
-//                 getline(cin, sEmployeeID);
-//                 if (sEmployeeID.empty()) {
-//                     getline(cin, sEmployeeID);
-//                 }
-//                 if (!sEmployeeID.empty()) {
-//                     getEmployeeByID(sEmployeeID);
-//                 }
-//                 else {
-//                     cout << "No ID entered.\n";
-//                 }
-//                 pauseForEnter();
-//                 break;
-//             }
-
-//             case EMSMenu::ExitDetails:
-//             {
-//                 return; 
-//             }
-
-//             default:
-//                 cout << "Invalid choice.\n";
-//                 break;
-//         }
-//     }
-// }
-
 void XyzEmployeeManager::subSummaryMenu() {
     while(true) {
         cout << "---------------------------------------------------------------------------------\n";
@@ -626,63 +520,70 @@ void XyzEmployeeManager::subSummaryMenu() {
             return;
         }
 
-        EmployeeReportBuilder builder(*this); // start with defaults
+        EmployeeReportBuilder sBuilder(*this); // start with default
 
         switch (sInputChoice) {
             case EMSMenu::AllDetails: {
-                builder.includeCurrent(true).includeResigned(true).clearFilters().print();
+                sBuilder.includeCurrent(true).includeResigned(true).clearFilters().print();
                 break;
             }
+
             case EMSMenu::DetailsByType: {
                 cout << "Choose Employee type: 1.Full-Time 2.Contractor 3.Intern\nChoice: ";
                 int sInputType = readIntSafely();
                 if (sInputType == XyzEmployeeEnums::FullTime ||
                     sInputType == XyzEmployeeEnums::Contractor ||
                     sInputType == XyzEmployeeEnums::Intern) {
-                    builder.includeCurrent(true).includeResigned(false).filterType(sInputType).print();
+                    sBuilder.includeCurrent(true).includeResigned(false).filterType(sInputType).print();
                 } else {
                     cout << "Invalid type\n";
                 }
                 break;
             }
+
             case EMSMenu::DetailsByGender: {
                 cout << "Choose gender: 1.Male 2.Female\nChoice: ";
                 int sInputGender = readIntSafely();
                 if (sInputGender == XyzEmployeeEnums::Male || sInputGender == XyzEmployeeEnums::Female) {
                     // include both current and resigned for gender view
-                    builder.includeCurrent(true).includeResigned(true).filterGender(sInputGender).print();
+                    sBuilder.includeCurrent(true).includeResigned(true).filterGender(sInputGender).print();
                 } else {
                     cout << "Invalid gender\n";
                 }
                 break;
             }
+
             case EMSMenu::DetailsByStatus: {
                 cout << "Choose status: 1.Active/2.Inactive/3.Resigned\nChoice: ";
                 int sInputStatus = readIntSafely();
                 if (sInputStatus == XyzEmployeeEnums::Active || sInputStatus == XyzEmployeeEnums::Inactive) {
                     // current deque contains active/inactive
-                    builder.includeCurrent(true).includeResigned(false).filterStatus(sInputStatus).print();
+                    sBuilder.includeCurrent(true).includeResigned(false).filterStatus(sInputStatus).print();
                 }
                 else if (sInputStatus == XyzEmployeeEnums::Resigned) {
-                    builder.includeCurrent(false).includeResigned(true).filterStatus(sInputStatus).print();
+                    sBuilder.includeCurrent(false).includeResigned(true).filterStatus(sInputStatus).print();
                 }
                 else {
                     cout << "Invalid status\n";
                 }
                 break;
             }
+
             case EMSMenu::DetailsByID: {
                 cout << "Enter Employee ID to display details: ";
                 string sEmployeeID; 
                 getline(cin, sEmployeeID);
-                if (sEmployeeID.empty()) getline(cin, sEmployeeID);
+                if (sEmployeeID.empty()){
+                    getline(cin, sEmployeeID);
+                }
                 if (!sEmployeeID.empty()) {
-                    getEmployeeByID(sEmployeeID); // reuse existing function
+                    getEmployeeByID(sEmployeeID);
                 } else {
                     cout << "No ID entered.\n";
                 }
                 break;
             }
+
             default: {
                 cout << "Invalid choice.\n";
                 break;
