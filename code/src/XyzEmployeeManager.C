@@ -545,8 +545,7 @@ void XyzEmployeeManager::subSummaryMenu() {
                 cout << "Choose gender: 1.Male 2.Female\nChoice: ";
                 int sInputGender = readIntSafely();
                 if (sInputGender == XyzEmployeeEnums::Male || sInputGender == XyzEmployeeEnums::Female) {
-                    // include both current and resigned for gender view
-                    sBuilder.includeCurrent(true).includeResigned(true).filterGender(sInputGender).print();
+                    sBuilder.includeCurrent(true).includeResigned(false).filterGender(sInputGender).print();
                 } else {
                     cout << "Invalid gender\n";
                 }
@@ -557,7 +556,6 @@ void XyzEmployeeManager::subSummaryMenu() {
                 cout << "Choose status: 1.Active/2.Inactive/3.Resigned\nChoice: ";
                 int sInputStatus = readIntSafely();
                 if (sInputStatus == XyzEmployeeEnums::Active || sInputStatus == XyzEmployeeEnums::Inactive) {
-                    // current deque contains active/inactive
                     sBuilder.includeCurrent(true).includeResigned(false).filterStatus(sInputStatus).print();
                 }
                 else if (sInputStatus == XyzEmployeeEnums::Resigned) {
