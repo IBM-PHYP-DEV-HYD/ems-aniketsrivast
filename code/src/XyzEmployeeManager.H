@@ -40,6 +40,11 @@ class XyzEmployeeManager {
 
         int readIntSafely() const;
         void pauseForEnter() const;
+
+        int getCurrentSize();
+        XyzEmployee* getCurrentEmployeeAt(int);
+        int getResignedSize();
+        XyzEmployee* getResignedEmployeeAt(int);
 };
 
 #endif // XYZEMPLOYEEMANAGER_H_
