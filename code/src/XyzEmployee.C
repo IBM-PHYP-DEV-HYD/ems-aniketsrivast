@@ -1,5 +1,6 @@
 #include <iostream>
 #include "XyzEmployee.H"
+#include <iomanip>
 
 using namespace std;
 
@@ -78,13 +79,7 @@ void XyzEmployee::setEmployeeDOJ(string dojParam){
 
 // Prints Employee details
 void XyzEmployee::printEmployeeDetails(){
-    cout<<"Employee Name: "<<mName
-    <<",\nGender: "<<((mGender==XyzEmployeeEnums::Male)?"Male":"Female")<<
-    ",\nDate of Birth: "<<mDOB
-    <<",\nEmployee ID: "<<mEmpID
-    <<",\nEmployement Type: "<<((mType==XyzEmployeeEnums::FullTime)?"Full Time":((mType==XyzEmployeeEnums::Contractor)?"Contractor":"Intern"))
-    <<",\nEmployement Status: "<<((mStatus==XyzEmployeeEnums::Active)?"Active":((mStatus==XyzEmployeeEnums::Inactive)?"Inactive":"Resigned"))
-    <<",\nDate of Joining: "<<mDOJ<<endl;
+    cout << "| "<<left<<setw(22)<<mName<<" | "<<left<<setw(10)<<mEmpID<<" | "<<left<<setw(9)<<mType<<" | "<<left<<setw(12)<<mStatus<<" | "<<left<<setw(9)<<mGender<<" | "<<left<<setw(13)<<mDOB<<" | "<<left<<setw(15)<<mDOJ<<" |\n";
 }
 
 // Overloading << output stream operator to print XyzEmployee object

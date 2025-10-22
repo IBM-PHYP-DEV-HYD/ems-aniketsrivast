@@ -1,4 +1,5 @@
 #include "XyzInternEmployee.H"
+#include <iomanip>
 
 XyzInternEmployee::~XyzInternEmployee() = default;
 
@@ -47,22 +48,18 @@ string XyzInternEmployee::getCollegeString(){
             return "IIITH";
             break;
         default:
-            return "Default College";
+            return "IITD";
             break;
     }
 }
 
 // Print Intern Employee details
 void XyzInternEmployee::printEmployeeDetails() {
-    cout<<"Employee Name: "<<mName
-    <<",\nGender: "<<((mGender==XyzEmployeeEnums::Male)?"Male":"Female")<<
-    ",\nDate of Birth: "<<mDOB
-    <<",\nEmployee ID: "<<mEmpID
-    <<",\nEmployement Type: "<<((mType==XyzEmployeeEnums::FullTime)?"Full Time":((mType==XyzEmployeeEnums::Contractor)?"Contractor":"Intern"))
-    <<",\nEmployement Status: "<<((mStatus==XyzEmployeeEnums::Active)?"Active":((mStatus==XyzEmployeeEnums::Inactive)?"Inactive":"Resigned"))
-    <<",\nDate of Joining: "<<mDOJ
-    <<",\nCollege: "<<getCollegeString()
-    <<",\nBranch: "<<((mBranch==XyzEmployeeEnums::CSE)?"CSE":((mBranch==XyzEmployeeEnums::CSEIT)?"CSEIT":"ECE"))<<endl;
+    cout << "| "<<left<<setw(22)<<mName<<" | "<<left<<setw(10)<<mEmpID<<" | "<<left<<setw(10)<<"Intern"<<" | "
+    <<left<<setw(12)<<((mStatus==XyzEmployeeEnums::Active)?"Active":((mStatus==XyzEmployeeEnums::Inactive)?"Inactive":"Resigned"))<<" | "
+    <<left<<setw(9)<<((mGender==XyzEmployeeEnums::Male)?"Male":"Female")<<" | "<<left<<setw(13)<<mDOB<<" | "
+    <<left<<setw(15)<<mDOJ<<" | "<<left<<setw(11)<<"NA"<<" | "<<left<<setw(14)<<"NA"<<" | "<<left<<setw(14)<<"NA"<<" | "<<left<<setw(7)<<getCollegeString()<<" | "
+    <<left<<setw(6)<<((mCollege==XyzEmployeeEnums::CSE)?"CSE":((mCollege==XyzEmployeeEnums::CSEIT)?"CSEIT":"ECE"))<<" |\n";
 }
 
 // Overloading << output stream operator to print XyzInternEmployee object
@@ -96,11 +93,11 @@ istream& operator>>(istream& InParam, XyzInternEmployee& XyzEmployeeParam) {
         cout<<"Your choice: ";
         InParam>>XyzEmployeeParam.mStatus;
         cout<<endl;
-        cout<<"Enter Branch: 1. CSE, 2. CSEIT, 3. ECE";
+        cout<<"Enter Branch: 1. CSE, 2. CSEIT, 3. ECE\n";
         cout<<"Your choice: ";
         InParam>>XyzEmployeeParam.mCollege;
         cout<<endl;
-        cout<<"Enter Agency: 1. IITD, 2. IITM, 3. IITK, 4. IITH, 5. NITW, 6. NITT, 7. IIITH";
+        cout<<"Enter Agency: 1. IITD, 2. IITM, 3. IITK, 4. IITH, 5. NITW, 6. NITT, 7. IIITH\n";
         cout<<"Your choice: ";
         InParam>>XyzEmployeeParam.mCollege;
         cout<<endl;

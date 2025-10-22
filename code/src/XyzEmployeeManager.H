@@ -17,15 +17,6 @@ class XyzEmployeeManager {
         XyzEmployee* createEmployeeRandom();
         XyzEmployee* createEmployeeFromInput();
         
-        void printFullTimeEmployees();
-        void printContractorEmployees();
-        void printInternEmployees();
-        void printMaleEmployees();
-        void printFemaleEmployees();
-        void printCurrentEmployees();
-        void printResignedEmployees();
-        void printAllEmployees();
-
         void getEmployeeByName(string);
         void getEmployeeByID(string);
         bool convertToFullTime(string);

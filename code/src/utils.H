@@ -110,6 +110,7 @@ namespace EMSMenu{
     enum AddMenuEnums{
         ExitAdd = -1,
         AddRandom = 1,
+        AddMultipleRandoms,
         AddManually
     };
     

@@ -1,4 +1,5 @@
 #include "XyzContractorEmployee.H"
+#include <iomanip>
 
 // Default Destructor
 XyzContractorEmployee::~XyzContractorEmployee() = default;
@@ -15,14 +16,12 @@ void XyzContractorEmployee::setAgency(int agencyParam){
 
 // Print Contractor Employee details
 void XyzContractorEmployee::printEmployeeDetails() {
-    cout<<"Employee Name: "<<mName
-    <<",\nGender: "<<((mGender==XyzEmployeeEnums::Male)?"Male":"Female")<<
-    ",\nDate of Birth: "<<mDOB
-    <<",\nEmployee ID: "<<mEmpID
-    <<",\nEmployement Type: "<<((mType==XyzEmployeeEnums::FullTime)?"Full Time":((mType==XyzEmployeeEnums::Contractor)?"Contractor":"Intern"))
-    <<",\nEmployement Status: "<<((mStatus==XyzEmployeeEnums::Active)?"Active":((mStatus==XyzEmployeeEnums::Inactive)?"Inactive":"Resigned"))
-    <<",\nDate of Joining: "<<mDOJ
-    <<",\nAgency: "<<((mAgency==XyzEmployeeEnums::Avengers)?"Avengers":((mAgency==XyzEmployeeEnums::JusticeLeague)?"Justice League":"X-Men"))<<endl;
+    cout << "| "<<left<<setw(22)<<mName<<" | "<<left<<setw(10)<<mEmpID<<" | "<<left<<setw(10)<<"Contractor"<<" | "
+    <<left<<setw(12)<<((mStatus==XyzEmployeeEnums::Active)?"Active":((mStatus==XyzEmployeeEnums::Inactive)?"Inactive":"Resigned"))<<" | "
+    <<left<<setw(9)<<((mGender==XyzEmployeeEnums::Male)?"Male":"Female")<<" | "<<left<<setw(13)<<mDOB<<" | "
+    <<left<<setw(15)<<mDOJ<<" | "<<left<<setw(11)<<"NA"<<" | "<<left<<setw(14)<<"NA"<<" | "<<left<<setw(14)
+    <<((mAgency==XyzEmployeeEnums::JusticeLeague)?"Justice League":((mAgency==XyzEmployeeEnums::XMen)?"X-Men":"Avengers"))<<" | "<<left<<setw(7)<<"NA"<<" | "
+    <<left<<setw(6)<<"NA"<<" |\n";
 }
 
 // Overloading << output stream operator to print XyzContractorEmployee object
@@ -55,7 +54,7 @@ istream& operator>>(istream& InParam, XyzContractorEmployee& XyzEmployeeParam) {
         cout<<"Your choice: ";
         InParam>>XyzEmployeeParam.mStatus;
         cout<<endl;
-        cout<<"Enter Agency: 1. Avengers, 2. Justice Leque, 3. X-Men";
+        cout<<"Enter Agency: 1. Avengers, 2. Justice League, 3. X-Men\n";
         cout<<"Your choice: ";
         InParam>>XyzEmployeeParam.mAgency;
         cout<<endl;

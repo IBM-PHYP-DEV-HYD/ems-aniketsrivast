@@ -9,8 +9,6 @@
 class EmployeeReportBuilder {
     private:
         XyzEmployeeManager& mEmployeeManager;
-        bool mIncludeCurrentFlag;
-        bool mIncludeResignedFlag;
         int mGenderFilter;
         int mStatusFilter;
         int mTypeFilter;
@@ -20,9 +18,6 @@ class EmployeeReportBuilder {
     public:
         explicit EmployeeReportBuilder(XyzEmployeeManager&);
 
-        EmployeeReportBuilder& includeCurrent(bool);
-        EmployeeReportBuilder& includeResigned(bool);
-
         // filters (0 = no filter)
         EmployeeReportBuilder& filterGender(int); // 1=Male,2=Female
         EmployeeReportBuilder& filterStatus(int); // 1=Active,2=Inactive,3=Resigned
@@ -30,7 +25,8 @@ class EmployeeReportBuilder {
 
         EmployeeReportBuilder& clearFilters();
 
-        void print() const;
+        void printCurrentFiltered() const;
+        void printResigned() const;
 };
 
 #endif // EMPLOYEEREPORTBUILDER_H_

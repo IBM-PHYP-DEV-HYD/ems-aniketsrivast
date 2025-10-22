@@ -1,4 +1,5 @@
 #include "XyzFullTimeEmployee.H"
+#include <iomanip>
 
 //Default Destructor
 XyzFullTimeEmployee::~XyzFullTimeEmployee() = default;
@@ -20,14 +21,11 @@ void XyzFullTimeEmployee::updateLeavesLeft(int leavesParam){
 
 // Print Full Time Employee details
 void XyzFullTimeEmployee::printEmployeeDetails() {
-    cout<<"Employee Name: "<<mName
-    <<",\nGender: "<<((mGender==1)?"Male":"Female")<<
-    ",\nDate of Birth: "<<mDOB
-    <<",\nEmployee ID: "<<mEmpID
-    <<",\nEmployement Type: "<<((mType==XyzEmployeeEnums::FullTime)?"Full Time":((mType==XyzEmployeeEnums::Contractor)?"Contractor":"Intern"))
-    <<",\nEmployement Status: "<<((mStatus==XyzEmployeeEnums::Active)?"Active":((mStatus==XyzEmployeeEnums::Inactive)?"Inactive":"Resigned"))
-    <<",\nDate of Joining: "<<mDOJ
-    <<",\nLeaves Left: "<<mLeavesLeft<<endl;
+    cout << "| "<<left<<setw(22)<<mName<<" | "<<left<<setw(10)<<mEmpID<<" | "<<left<<setw(10)<<"Full Time"<<" | "
+    <<left<<setw(12)<<((mStatus==XyzEmployeeEnums::Active)?"Active":((mStatus==XyzEmployeeEnums::Inactive)?"Inactive":"Resigned"))<<" | "
+    <<left<<setw(9)<<((mGender==XyzEmployeeEnums::Male)?"Male":"Female")<<" | "<<left<<setw(13)<<mDOB<<" | "<<left<<setw(15)<<mDOJ<<" | "
+    <<left<<setw(11)<<mLeavesLeft<<" | "<<left<<setw(14)<<mLeavesAvailed<<" | "<<left<<setw(14)<<"NA"<<" | "<<left<<setw(7)<<"NA"<<" | "
+    <<left<<setw(6)<<"NA"<<" |\n";
 }
 
 // Overloading << output stream operator to print XyzFullTimeEmployee object

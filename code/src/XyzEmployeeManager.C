@@ -7,16 +7,7 @@
 // Add new employee to EDLL
 void XyzEmployeeManager::addEmployee(XyzEmployee* employeeParam){
     if(employeeParam->getEmployementStatus() == XyzEmployeeEnums::Resigned){
-        XyzEmployee* sMinimalObject = new XyzEmployee();
-        sMinimalObject->setEmployeeName(employeeParam->getEmployeeName());
-        sMinimalObject->setEmployeeID(employeeParam->getEmployeeID());
-        sMinimalObject->setEmployeeType(employeeParam->getEmployeeType());
-        sMinimalObject->setEmployementStatus(XyzEmployeeEnums::Resigned);
-        sMinimalObject->setEmployeeGender(employeeParam->getEmployeeGender());
-        sMinimalObject->setEmployeeDOB(employeeParam->getEmployeeDOB());
-        sMinimalObject->setEmployeeDOJ(employeeParam->getEmployeeDOJ());
-        mResignedDLL.push_back(sMinimalObject);
-        delete employeeParam;
+        mResignedDLL.push_back(employeeParam);
     }
     else{
         mEmployeeDLL.push_back(employeeParam);
@@ -33,20 +24,10 @@ bool XyzEmployeeManager::removeEmployee(string employeeIDParam){
     int sEDLLSize = mEmployeeDLL.size();
     int sIndex = 0;
     for (sIndex = 0; sIndex < sEDLLSize; ++sIndex) {
-        XyzEmployee* sTemp = mEmployeeDLL[sIndex];   // operator[] returns XyzEmployee*
-        if (sTemp && sTemp->getEmployeeID() == employeeIDParam) {
-            // prepare minimal resigned entry
-            XyzEmployee* sResignedEmployee = new XyzEmployee();
-            sResignedEmployee->setEmployeeName(sTemp->getEmployeeName());
-            sResignedEmployee->setEmployeeID(sTemp->getEmployeeID());
-            sResignedEmployee->setEmployeeType(sTemp->getEmployeeType());
-            sResignedEmployee->setEmployementStatus(XyzEmployeeEnums::Resigned); // Resigned
-            sResignedEmployee->setEmployeeGender(sTemp->getEmployeeGender());
-            sResignedEmployee->setEmployeeDOB(sTemp->getEmployeeDOB());
-            sResignedEmployee->setEmployeeDOJ(sTemp->getEmployeeDOJ());
+        XyzEmployee* sTemp = getCurrentEmployeeAt(sIndex);   // operator[] returns XyzEmployee*
 
-            // push to resigned deque (resigned deque owns its pointers)
-            mResignedDLL.push_back(sResignedEmployee);
+        if (sTemp && sTemp->getEmployeeID() == employeeIDParam) {
+            mResignedDLL.push_back(sTemp);
 
             // remove from active deque — removeAt will also delete emp (since deque owns pointers)
             mEmployeeDLL.removeFromIndex(sIndex);
@@ -60,128 +41,6 @@ bool XyzEmployeeManager::removeEmployee(string employeeIDParam){
     return false;
 }
 
-// Print Full Time Employees
-void XyzEmployeeManager::printFullTimeEmployees(){
-    if (mEmployeeDLL.empty()) {
-        cout << "No current employees" << endl;
-        return;
-    }
-    bool sPrintedFlag = false;
-    int sIndex = 0;
-    for (sIndex = 0; sIndex < mEmployeeDLL.size(); ++sIndex) {
-        XyzEmployee* sEmployee = mEmployeeDLL[sIndex];
-        if (sEmployee && sEmployee->getEmployeeType() == XyzEmployeeEnums::FullTime) {
-            sEmployee->printEmployeeDetails();
-            cout << "---------------------------------------------" << endl;
-            sPrintedFlag = true;
-        }
-    }
-    if (!sPrintedFlag) {
-        cout << "No Full-Time employees found" << endl;
-    }
-}
-
-// Print Contractor Employees
-void XyzEmployeeManager::printContractorEmployees(){
-    if (mEmployeeDLL.empty()) {
-        cout << "No current employees" << endl;
-        return;
-    }
-    bool sPrintedFlag = false;
-    int sIndex = 0;
-    for (sIndex = 0; sIndex < mEmployeeDLL.size(); ++sIndex) {
-        XyzEmployee* sEmployee = mEmployeeDLL[sIndex];
-        if (sEmployee && sEmployee->getEmployeeType() == XyzEmployeeEnums::Contractor) {
-            sEmployee->printEmployeeDetails();
-            cout << "---------------------------------------------" << endl;
-            sPrintedFlag = true;
-        }
-    }
-    if (!sPrintedFlag) {
-        cout << "No Contractor employees found" << endl;
-    }
-}
-
-// Print Intern Employees
-void XyzEmployeeManager::printInternEmployees(){
-    if (mEmployeeDLL.empty()) {
-        cout << "No current employees" << endl;
-        return;
-    }
-    bool sPrintedFlag = false;
-    int sIndex = 0;
-    for (sIndex = 0; sIndex < mEmployeeDLL.size(); ++sIndex) {
-        XyzEmployee* sEmployee = mEmployeeDLL[sIndex];
-        if (sEmployee && sEmployee->getEmployeeType() == XyzEmployeeEnums::Intern) {
-            sEmployee->printEmployeeDetails();
-            cout << "---------------------------------------------" << endl;
-            sPrintedFlag = true;
-        }
-    }
-    if (!sPrintedFlag) {
-        cout << "No Intern employees found" << endl;
-    }
-}
-
-// Print Male Employees
-void XyzEmployeeManager::printMaleEmployees(){
-    if (mEmployeeDLL.empty()) {
-         cout << "No current employees\n"; 
-         return; 
-        }
-    bool sPrintedFlag = false;
-    int sIndex = 0;
-    for (sIndex = 0; sIndex < mEmployeeDLL.size(); ++sIndex) {
-        XyzEmployee* sEmployee = mEmployeeDLL[sIndex];
-        if (sEmployee && sEmployee->getEmployeeGender() == XyzEmployeeEnums::Male) {
-            sEmployee->printEmployeeDetails(); 
-            cout << "---------------------------------------------\n"; 
-            sPrintedFlag = true;
-        }
-    }
-    if (!sPrintedFlag) {
-        cout << "No male employees \n";
-    }
-}
-
-// Print Female Employees
-void XyzEmployeeManager::printFemaleEmployees(){
-    if (mEmployeeDLL.empty()) {
-         cout << "No current employees\n"; 
-         return; 
-        }
-    bool sPrintedFlag = false;
-    int sIndex = 0;
-    for (sIndex = 0; sIndex < mEmployeeDLL.size(); ++sIndex) {
-        XyzEmployee* sEmployee = mEmployeeDLL[sIndex];
-        if (sEmployee && sEmployee->getEmployeeGender() == XyzEmployeeEnums::Female) {
-            sEmployee->printEmployeeDetails(); 
-            cout << "---------------------------------------------\n"; 
-            sPrintedFlag = true;
-        }
-    }
-    if (!sPrintedFlag) {
-        cout << "No female employees \n";
-    }
-}
-
-// Print Current (Active/Inactive) Employees
-void XyzEmployeeManager::printCurrentEmployees(){
-    mEmployeeDLL.printEDLL();
-}
-
-// Print Resigned Employees
-void XyzEmployeeManager::printResignedEmployees(){
-    mResignedDLL.printEDLL();
-}
-
-// Print All employees
-void XyzEmployeeManager::printAllEmployees(){
-    mEmployeeDLL.printEDLL();
-    mResignedDLL.printEDLL();
-
-}
-
 // Print Employee by name
 void XyzEmployeeManager::getEmployeeByName(string nameParam){
     bool sFoundFlag = false;
@@ -189,16 +48,22 @@ void XyzEmployeeManager::getEmployeeByName(string nameParam){
     for (sIndex = 0; sIndex < mEmployeeDLL.size(); ++sIndex) {
         XyzEmployee* sEmployee = mEmployeeDLL[sIndex];
         if (sEmployee && sEmployee->getEmployeeName() == nameParam) {
+            cout << "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
+            cout << "| Employee Name          | ID         | Type       | Status       | Gender    | Date of Birth | Date of Joining | Leaves Left | Leaves Availed | Agency         | College | Branch |\n";
+            cout << "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
             sEmployee->printEmployeeDetails();
-            cout << "---------------------------------------------" << endl;
+            cout << "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
             sFoundFlag = true;
         }
     }
     for (sIndex = 0; sIndex < mResignedDLL.size(); ++sIndex) {
         XyzEmployee* sEmployee = mResignedDLL[sIndex];
         if (sEmployee && sEmployee->getEmployeeName() == nameParam) {
+            cout << "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
+            cout << "| Employee Name          | ID         | Type       | Status       | Gender    | Date of Birth | Date of Joining | Leaves Left | Leaves Availed | Agency         | College | Branch |\n";
+            cout << "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
             sEmployee->printEmployeeDetails();
-            cout << "---------------------------------------------" << endl;
+            cout << "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
             sFoundFlag = true;
         }
     }
@@ -213,14 +78,22 @@ void XyzEmployeeManager::getEmployeeByID(string empIDParam){
     for (sIndex = 0; sIndex < mEmployeeDLL.size(); ++sIndex) {
         XyzEmployee* sEmployee = mEmployeeDLL[sIndex];
         if (sEmployee && sEmployee->getEmployeeID() == empIDParam) {
+            cout << "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
+            cout << "| Employee Name          | ID         | Type       | Status       | Gender    | Date of Birth | Date of Joining | Leaves Left | Leaves Availed | Agency         | College | Branch |\n";
+            cout << "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
             sEmployee->printEmployeeDetails();
+            cout << "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
             return;
         }
     }
     for (sIndex = 0; sIndex < mResignedDLL.size(); ++sIndex) {
         XyzEmployee* sEmployee = mResignedDLL[sIndex];
         if (sEmployee && sEmployee->getEmployeeID() == empIDParam) {
+            cout << "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
+            cout << "| Employee Name          | ID         | Type       | Status       | Gender    | Date of Birth | Date of Joining | Leaves Left | Leaves Availed | Agency         | College | Branch |\n";
+            cout << "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
             sEmployee->printEmployeeDetails();
+            cout << "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
             return;
         }
     }
@@ -461,7 +334,8 @@ void XyzEmployeeManager::subAddMenu() {
         cout << "---------------------------------------------------------------------------------\n";
         cout << "| Add an Employee:                                                              |\n";
         cout << "|     1. Add an Employee at Random                                              |\n";
-        cout << "|     2. Add an Employee (F/C/I)                                                |\n";
+        cout << "|     2. Add 'n' employees at Random                                            |\n";
+        cout << "|     3. Add an Employee (F/C/I)                                                |\n";
         cout << "|    (Enter -1 to go back to main menu)                                         |\n";
         cout << "---------------------------------------------------------------------------------\n";
         cout << "Your choice: ";
@@ -473,6 +347,20 @@ void XyzEmployeeManager::subAddMenu() {
                 XyzEmployee* sEmployee = createEmployeeRandom();
                 addEmployee(sEmployee);
                 cout << "Random employee added.\n";
+                pauseForEnter();                
+            }
+            break;
+
+            case EMSMenu::AddMultipleRandoms:
+            {
+                cout<<"Enter number of random eployees to be added: ";
+                int sRandomCount = readIntSafely();
+                XyzEmployee* sEmployee = nullptr;
+                while(sRandomCount--){
+                    sEmployee = createEmployeeRandom();
+                    addEmployee(sEmployee);
+                }
+                cout << "Random employees added.\n";
                 pauseForEnter();                
             }
             break;
@@ -524,19 +412,40 @@ void XyzEmployeeManager::subSummaryMenu() {
 
         switch (sInputChoice) {
             case EMSMenu::AllDetails: {
-                sBuilder.includeCurrent(true).includeResigned(true).clearFilters().print();
+                cout<<"Current Employees:\n";
+                sBuilder.clearFilters().printCurrentFiltered();
+                cout<<"Resigned Employees:\n";
+                sBuilder.clearFilters().printResigned();
                 break;
             }
 
             case EMSMenu::DetailsByType: {
                 cout << "Choose Employee type: 1.Full-Time 2.Contractor 3.Intern\nChoice: ";
                 int sInputType = readIntSafely();
-                if (sInputType == XyzEmployeeEnums::FullTime ||
-                    sInputType == XyzEmployeeEnums::Contractor ||
-                    sInputType == XyzEmployeeEnums::Intern) {
-                    sBuilder.includeCurrent(true).includeResigned(false).filterType(sInputType).print();
-                } else {
-                    cout << "Invalid type\n";
+                switch(sInputType){
+                    case XyzEmployeeEnums::FullTime:
+                    {
+                        sBuilder.filterType(sInputType).printCurrentFiltered();
+                    }
+                    break;
+
+                    case XyzEmployeeEnums::Contractor:
+                    {
+                        sBuilder.filterType(sInputType).printCurrentFiltered();
+                    }
+                    break;
+
+                    case XyzEmployeeEnums::Intern:
+                    {
+                        sBuilder.filterType(sInputType).printCurrentFiltered();
+                    }
+                    break;
+
+                    default:
+                    {
+                        cout << "Invalid type\n";
+                    }
+                    break;
                 }
                 break;
             }
@@ -545,7 +454,7 @@ void XyzEmployeeManager::subSummaryMenu() {
                 cout << "Choose gender: 1.Male 2.Female\nChoice: ";
                 int sInputGender = readIntSafely();
                 if (sInputGender == XyzEmployeeEnums::Male || sInputGender == XyzEmployeeEnums::Female) {
-                    sBuilder.includeCurrent(true).includeResigned(false).filterGender(sInputGender).print();
+                    sBuilder.filterGender(sInputGender).printCurrentFiltered();
                 } else {
                     cout << "Invalid gender\n";
                 }
@@ -556,10 +465,10 @@ void XyzEmployeeManager::subSummaryMenu() {
                 cout << "Choose status: 1.Active/2.Inactive/3.Resigned\nChoice: ";
                 int sInputStatus = readIntSafely();
                 if (sInputStatus == XyzEmployeeEnums::Active || sInputStatus == XyzEmployeeEnums::Inactive) {
-                    sBuilder.includeCurrent(true).includeResigned(false).filterStatus(sInputStatus).print();
+                    sBuilder.filterStatus(sInputStatus).printCurrentFiltered();
                 }
                 else if (sInputStatus == XyzEmployeeEnums::Resigned) {
-                    sBuilder.includeCurrent(false).includeResigned(true).filterStatus(sInputStatus).print();
+                    sBuilder.printResigned();
                 }
                 else {
                     cout << "Invalid status\n";
@@ -600,7 +509,7 @@ void XyzEmployeeManager::subOthersMenu() {
         cout << "|                         Employee Management System                            |\n";
         cout << "---------------------------------------------------------------------------------\n";
         cout << "| Do something else:                                                            |\n";
-        cout << "|     1. Add 'n' number of leaves to all the Full-Time employees               |\n";
+        cout << "|     1. Add 'n' number of leaves to all the Full-Time employees                |\n";
         cout << "|     2. Convert an Intern to Full-Time employee                                |\n";
         cout << "|     3. Search an Employee by ID                                               |\n";
         cout << "|     4. Search an Employee by Name                                             |\n";
