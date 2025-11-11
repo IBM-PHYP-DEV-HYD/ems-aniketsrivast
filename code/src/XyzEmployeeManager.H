@@ -29,9 +29,6 @@ class XyzEmployeeManager {
         void subSummaryMenu();
         void subOthersMenu();
 
-        int readIntSafely() const;
-        void pauseForEnter() const;
-
         int getCurrentSize();
         XyzEmployee* getCurrentEmployeeAt(int);
         int getResignedSize();

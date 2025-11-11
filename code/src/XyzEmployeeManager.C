@@ -3,6 +3,9 @@
 #include "XyzContractorEmployee.H"
 #include "XyzInternEmployee.H"
 #include "EmployeeReportBuilder.H"
+#include "HelperClass.H"
+#include <sstream> 
+#include <iomanip>
 
 // Add new employee to EDLL
 void XyzEmployeeManager::addEmployee(XyzEmployee* employeeParam){
@@ -48,22 +51,22 @@ void XyzEmployeeManager::getEmployeeByName(string nameParam){
     for (sIndex = 0; sIndex < mEmployeeDLL.size(); ++sIndex) {
         XyzEmployee* sEmployee = mEmployeeDLL[sIndex];
         if (sEmployee && sEmployee->getEmployeeName() == nameParam) {
-            cout << "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
-            cout << "| Employee Name          | ID         | Type       | Status       | Gender    | Date of Birth | Date of Joining | Leaves Left | Leaves Availed | Agency         | College | Branch |\n";
-            cout << "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
+            cout << "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
+            cout << "| Employee Name          | ID           | Type       | Status       | Gender    | Date of Birth | Date of Joining | Leaves Left | Leaves Availed | Agency         | College | Branch |\n";
+            cout << "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
             sEmployee->printEmployeeDetails();
-            cout << "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
+            cout << "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
             sFoundFlag = true;
         }
     }
     for (sIndex = 0; sIndex < mResignedDLL.size(); ++sIndex) {
         XyzEmployee* sEmployee = mResignedDLL[sIndex];
         if (sEmployee && sEmployee->getEmployeeName() == nameParam) {
-            cout << "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
-            cout << "| Employee Name          | ID         | Type       | Status       | Gender    | Date of Birth | Date of Joining | Leaves Left | Leaves Availed | Agency         | College | Branch |\n";
-            cout << "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
+            cout << "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
+            cout << "| Employee Name          | ID           | Type       | Status       | Gender    | Date of Birth | Date of Joining | Leaves Left | Leaves Availed | Agency         | College | Branch |\n";
+            cout << "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
             sEmployee->printEmployeeDetails();
-            cout << "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
+            cout << "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
             sFoundFlag = true;
         }
     }
@@ -78,22 +81,22 @@ void XyzEmployeeManager::getEmployeeByID(string empIDParam){
     for (sIndex = 0; sIndex < mEmployeeDLL.size(); ++sIndex) {
         XyzEmployee* sEmployee = mEmployeeDLL[sIndex];
         if (sEmployee && sEmployee->getEmployeeID() == empIDParam) {
-            cout << "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
-            cout << "| Employee Name          | ID         | Type       | Status       | Gender    | Date of Birth | Date of Joining | Leaves Left | Leaves Availed | Agency         | College | Branch |\n";
-            cout << "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
+            cout << "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
+            cout << "| Employee Name          | ID           | Type       | Status       | Gender    | Date of Birth | Date of Joining | Leaves Left | Leaves Availed | Agency         | College | Branch |\n";
+            cout << "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
             sEmployee->printEmployeeDetails();
-            cout << "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
+            cout << "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
             return;
         }
     }
     for (sIndex = 0; sIndex < mResignedDLL.size(); ++sIndex) {
         XyzEmployee* sEmployee = mResignedDLL[sIndex];
         if (sEmployee && sEmployee->getEmployeeID() == empIDParam) {
-            cout << "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
-            cout << "| Employee Name          | ID         | Type       | Status       | Gender    | Date of Birth | Date of Joining | Leaves Left | Leaves Availed | Agency         | College | Branch |\n";
-            cout << "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
+            cout << "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
+            cout << "| Employee Name          | ID           | Type       | Status       | Gender    | Date of Birth | Date of Joining | Leaves Left | Leaves Availed | Agency         | College | Branch |\n";
+            cout << "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
             sEmployee->printEmployeeDetails();
-            cout << "-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
+            cout << "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
             return;
         }
     }
@@ -162,7 +165,9 @@ void XyzEmployeeManager::addLeaves(int leavesParam){
 
 // ID Generator
 string XyzEmployeeManager::generateNextEmployeeID(char typeParam) {
-    string sEmployeeID = "XYZ" + std::to_string(mNextNumericID) + string(1, typeParam);
+    std::ostringstream oss;
+    oss << "XYZ" << std::setw(8) << std::setfill('0') << mNextNumericID << typeParam;
+    std::string sEmployeeID = oss.str();
     ++mNextNumericID;
     return sEmployeeID;
 }
@@ -173,41 +178,59 @@ XyzEmployee* XyzEmployeeManager::createEmployeeRandom() {
     XyzEmployee* sEmployee = nullptr;
     char sTypeCode = (sRandomType == XyzEmployeeEnums::FullTime ? 'F' : (sRandomType == XyzEmployeeEnums::Contractor ? 'C' : 'I'));
     string sEmployeeID = generateNextEmployeeID(sTypeCode);
+    
+    const array<string, 10> sEmployeeNames = {
+    "Aniket", "Pranjal", "Tushar", "Dilip", "Isha",
+    "Swathi", "Mahanth", "Aditya", "Rohini", "Pavan"
+    };
+    int sRandomIndex = rand() % 10;   // Random number from 0 to 9
 
-    if (sRandomType == XyzEmployeeEnums::FullTime) {
-        XyzFullTimeEmployee* sFullTimeEmployee = new XyzFullTimeEmployee();
-        sFullTimeEmployee->setEmployeeName("Random FullTime");
-        sFullTimeEmployee->setEmployeeID(sEmployeeID);
-        sFullTimeEmployee->setEmployeeType(XyzEmployeeEnums::FullTime);
-        sFullTimeEmployee->setEmployementStatus(XyzEmployeeEnums::Active);
-        sFullTimeEmployee->setEmployeeGender(XyzEmployeeEnums::Male);
-        sFullTimeEmployee->setEmployeeDOB("1999-01-01");
-        sFullTimeEmployee->setEmployeeDOJ("2024-01-01");
-        sFullTimeEmployee->updateLeavesLeft(STANDARD_LEAVES);
-        sEmployee = sFullTimeEmployee;
-    } else if (sRandomType == XyzEmployeeEnums::Contractor) {
-        XyzContractorEmployee* sContractor = new XyzContractorEmployee();
-        sContractor->setEmployeeName("Random Contractor");
-        sContractor->setEmployeeID(sEmployeeID);
-        sContractor->setEmployeeType(XyzEmployeeEnums::Contractor);
-        sContractor->setEmployementStatus(XyzEmployeeEnums::Active);
-        sContractor->setEmployeeGender(XyzEmployeeEnums::Male);
-        sContractor->setEmployeeDOB("1995-03-03");
-        sContractor->setEmployeeDOJ("2024-02-15");
-        sContractor->setAgency(1 + (rand()%3));
-        sEmployee = sContractor;
-    } else {
-        XyzInternEmployee* sIntern = new XyzInternEmployee();
-        sIntern->setEmployeeName("Random Intern");
-        sIntern->setEmployeeID(sEmployeeID);
-        sIntern->setEmployeeType(XyzEmployeeEnums::Intern);
-        sIntern->setEmployementStatus(XyzEmployeeEnums::Active);
-        sIntern->setEmployeeGender(XyzEmployeeEnums::Female);
-        sIntern->setEmployeeDOB("2002-06-06");
-        sIntern->setEmployeeDOJ("2024-07-01");
-        sIntern->setCollege(1 + (rand()%7));
-        sIntern->setBranch(1 + (rand()%3));
-        sEmployee = sIntern;
+    switch(sRandomType){
+        case XyzEmployeeEnums::FullTime:
+        {
+            XyzFullTimeEmployee* sFullTimeEmployee = new XyzFullTimeEmployee();
+            sFullTimeEmployee->setEmployeeName(sEmployeeNames[sRandomIndex]);
+            sFullTimeEmployee->setEmployeeID(sEmployeeID);
+            sFullTimeEmployee->setEmployeeType(XyzEmployeeEnums::FullTime);
+            sFullTimeEmployee->setEmployementStatus(XyzEmployeeEnums::Active);
+            sFullTimeEmployee->setEmployeeGender((rand()%2)+1);
+            sFullTimeEmployee->setEmployeeDOB("1999-01-01");
+            sFullTimeEmployee->setEmployeeDOJ("2024-01-01");
+            sFullTimeEmployee->updateLeavesLeft(STANDARD_LEAVES);
+            sEmployee = sFullTimeEmployee;
+        }
+        break;
+
+        case XyzEmployeeEnums::Contractor:
+        {
+            XyzContractorEmployee* sContractor = new XyzContractorEmployee();
+            sContractor->setEmployeeName(sEmployeeNames[sRandomIndex]);
+            sContractor->setEmployeeID(sEmployeeID);
+            sContractor->setEmployeeType(XyzEmployeeEnums::Contractor);
+            sContractor->setEmployementStatus(XyzEmployeeEnums::Active);
+            sContractor->setEmployeeGender((rand()%2)+1);
+            sContractor->setEmployeeDOB("1995-03-03");
+            sContractor->setEmployeeDOJ("2024-02-15");
+            sContractor->setAgency(1 + (rand()%3));
+            sEmployee = sContractor;            
+        }
+        break;
+
+        case XyzEmployeeEnums::Intern:
+        {
+            XyzInternEmployee* sIntern = new XyzInternEmployee();
+            sIntern->setEmployeeName(sEmployeeNames[sRandomIndex]);
+            sIntern->setEmployeeID(sEmployeeID);
+            sIntern->setEmployeeType(XyzEmployeeEnums::Intern);
+            sIntern->setEmployementStatus(XyzEmployeeEnums::Active);
+            sIntern->setEmployeeGender((rand()%2)+1);
+            sIntern->setEmployeeDOB("2002-06-06");
+            sIntern->setEmployeeDOJ("2024-07-01");
+            sIntern->setCollege(1 + (rand()%7));
+            sIntern->setBranch(1 + (rand()%3));
+            sEmployee = sIntern;
+        }
+        break;
     }
     return sEmployee;
 }
@@ -215,12 +238,11 @@ XyzEmployee* XyzEmployeeManager::createEmployeeRandom() {
 // Create Employee manually
 XyzEmployee* XyzEmployeeManager::createEmployeeFromInput() {
     cout << "Choose type: 1. Full-Time  2. Contractor  3. Intern\nYour choice: ";
-    int sTypeChoice = XyzEmployeeEnums::FullTime;
-    if (!(cin >> sTypeChoice)) {
-        cin.clear(); 
-        sTypeChoice = XyzEmployeeEnums::FullTime; 
+    int sTypeChoice = HelperClass::readIntSafely();
+    while (sTypeChoice > XyzEmployeeEnums::Intern || sTypeChoice < XyzEmployeeEnums::FullTime){
+        cout<<"Invalid Input. Choose type: 1. Full-Time  2. Contractor  3. Intern\nYour choice: ";
+        sTypeChoice = HelperClass::readIntSafely();
     }
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     XyzEmployee* sEmployee = nullptr;
     if (sTypeChoice == XyzEmployeeEnums::FullTime) {
@@ -242,24 +264,6 @@ XyzEmployee* XyzEmployeeManager::createEmployeeFromInput() {
     return sEmployee;
 }
 
-// Read integer by ignoring any spaces or newlines present
-int XyzEmployeeManager::readIntSafely() const {
-    int sInput;
-    while (!(cin >> sInput)) {
-        cout << "Invalid input. Try again: ";
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    }
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    return sInput;
-}
-
-// Pause buffer in mid
-void XyzEmployeeManager::pauseForEnter() const {
-    cout << "\nPress Enter to continue...";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
-}
-
 // Main Employee Manager
 void XyzEmployeeManager::mainMenu() {
     while (true) {
@@ -273,7 +277,8 @@ void XyzEmployeeManager::mainMenu() {
         cout << "|    (Enter -1 to exit)                                                         |\n";
         cout << "---------------------------------------------------------------------------------\n";
         cout << "Your Choice: ";
-        int sInputChoice = readIntSafely();
+
+        int sInputChoice = HelperClass::readIntSafely();
 
         switch (sInputChoice) {
             case EMSMenu::AddMenu: 
@@ -296,7 +301,7 @@ void XyzEmployeeManager::mainMenu() {
                 else {
                     cout << "No ID entered.\n";
                 }
-                pauseForEnter();
+                HelperClass::pauseForEnter();
                 break;
             }
 
@@ -339,7 +344,7 @@ void XyzEmployeeManager::subAddMenu() {
         cout << "|    (Enter -1 to go back to main menu)                                         |\n";
         cout << "---------------------------------------------------------------------------------\n";
         cout << "Your choice: ";
-        int sInputChoice = readIntSafely();
+        int sInputChoice = HelperClass::readIntSafely();
 
         switch(sInputChoice){
             case EMSMenu::AddRandom:
@@ -347,21 +352,25 @@ void XyzEmployeeManager::subAddMenu() {
                 XyzEmployee* sEmployee = createEmployeeRandom();
                 addEmployee(sEmployee);
                 cout << "Random employee added.\n";
-                pauseForEnter();                
+                HelperClass::pauseForEnter();                
             }
             break;
 
             case EMSMenu::AddMultipleRandoms:
             {
                 cout<<"Enter number of random eployees to be added: ";
-                int sRandomCount = readIntSafely();
+                int sRandomCount = HelperClass::readIntSafely();
+                while (sRandomCount > MAX_RANDOM_EMPLOYEES || sRandomCount < MIN_RANDOM_EMPLOYEES){
+                    cout<<"Allowed entry bounds exceeded. Enter a value between 1 and 100\nYour choice: ";
+                    sRandomCount = HelperClass::readIntSafely();
+                }
                 XyzEmployee* sEmployee = nullptr;
                 while(sRandomCount--){
                     sEmployee = createEmployeeRandom();
                     addEmployee(sEmployee);
                 }
                 cout << "Random employees added.\n";
-                pauseForEnter();                
+                HelperClass::pauseForEnter();                
             }
             break;
 
@@ -370,7 +379,7 @@ void XyzEmployeeManager::subAddMenu() {
                 XyzEmployee* sEmployee = createEmployeeFromInput();
                 addEmployee(sEmployee);
                 cout << "Employee added.\n";
-                pauseForEnter();
+                HelperClass::pauseForEnter();
             }
             break;
 
@@ -402,7 +411,7 @@ void XyzEmployeeManager::subSummaryMenu() {
         cout << "|    (Enter -1 to go back to previous menu)                                     |\n";
         cout << "---------------------------------------------------------------------------------\n";
         cout << "Your choice: ";
-        int sInputChoice = readIntSafely();
+        int sInputChoice = HelperClass::readIntSafely();
 
         if (sInputChoice == EMSMenu::ExitDetails) {
             return;
@@ -421,7 +430,7 @@ void XyzEmployeeManager::subSummaryMenu() {
 
             case EMSMenu::DetailsByType: {
                 cout << "Choose Employee type: 1.Full-Time 2.Contractor 3.Intern\nChoice: ";
-                int sInputType = readIntSafely();
+                int sInputType = HelperClass::readIntSafely();
                 switch(sInputType){
                     case XyzEmployeeEnums::FullTime:
                     {
@@ -452,7 +461,7 @@ void XyzEmployeeManager::subSummaryMenu() {
 
             case EMSMenu::DetailsByGender: {
                 cout << "Choose gender: 1.Male 2.Female\nChoice: ";
-                int sInputGender = readIntSafely();
+                int sInputGender = HelperClass::readIntSafely();
                 if (sInputGender == XyzEmployeeEnums::Male || sInputGender == XyzEmployeeEnums::Female) {
                     sBuilder.filterGender(sInputGender).printCurrentFiltered();
                 } else {
@@ -463,7 +472,7 @@ void XyzEmployeeManager::subSummaryMenu() {
 
             case EMSMenu::DetailsByStatus: {
                 cout << "Choose status: 1.Active/2.Inactive/3.Resigned\nChoice: ";
-                int sInputStatus = readIntSafely();
+                int sInputStatus = HelperClass::readIntSafely();
                 if (sInputStatus == XyzEmployeeEnums::Active || sInputStatus == XyzEmployeeEnums::Inactive) {
                     sBuilder.filterStatus(sInputStatus).printCurrentFiltered();
                 }
@@ -497,7 +506,7 @@ void XyzEmployeeManager::subSummaryMenu() {
             }
         }
 
-        pauseForEnter();
+        HelperClass::pauseForEnter();
     }
 }
 
@@ -516,15 +525,15 @@ void XyzEmployeeManager::subOthersMenu() {
         cout << "|    (Enter -1 to go back to previous menu)                                     |\n";
         cout << "---------------------------------------------------------------------------------\n";
         cout << "Your choice: ";
-        int sInputChoice = readIntSafely();
+        int sInputChoice = HelperClass::readIntSafely();
 
         switch (sInputChoice) {
             case EMSMenu::AddLeaves: 
             {
                 cout << "Enter number of leaves to add: ";
-                int sLeavesInput = readIntSafely();
+                int sLeavesInput = HelperClass::readIntSafely();
                 addLeaves(sLeavesInput);
-                pauseForEnter();
+                HelperClass::pauseForEnter();
                 break;
             }
 
@@ -542,7 +551,7 @@ void XyzEmployeeManager::subOthersMenu() {
                 else {
                     cout << "No ID entered.\n";
                 }
-                pauseForEnter();
+                HelperClass::pauseForEnter();
                 break;
             }
 
@@ -560,7 +569,7 @@ void XyzEmployeeManager::subOthersMenu() {
                 else {
                     cout << "No ID entered.\n";
                 }
-                pauseForEnter();
+                HelperClass::pauseForEnter();
                 break;
             }
 
@@ -576,7 +585,7 @@ void XyzEmployeeManager::subOthersMenu() {
                     getEmployeeByName(sInputName);
                 }
                 else cout << "No name entered.\n";
-                pauseForEnter();
+                HelperClass::pauseForEnter();
                 break;
             }
 

@@ -1,4 +1,5 @@
 #include "XyzFullTimeEmployee.H"
+#include "HelperClass.H"
 #include <iomanip>
 
 //Default Destructor
@@ -21,7 +22,7 @@ void XyzFullTimeEmployee::updateLeavesLeft(int leavesParam){
 
 // Print Full Time Employee details
 void XyzFullTimeEmployee::printEmployeeDetails() {
-    cout << "| "<<left<<setw(22)<<mName<<" | "<<left<<setw(10)<<mEmpID<<" | "<<left<<setw(10)<<"Full Time"<<" | "
+    cout << "| "<<left<<setw(22)<<mName<<" | "<<left<<setw(12)<<mEmpID<<" | "<<left<<setw(10)<<"Full Time"<<" | "
     <<left<<setw(12)<<((mStatus==XyzEmployeeEnums::Active)?"Active":((mStatus==XyzEmployeeEnums::Inactive)?"Inactive":"Resigned"))<<" | "
     <<left<<setw(9)<<((mGender==XyzEmployeeEnums::Male)?"Male":"Female")<<" | "<<left<<setw(13)<<mDOB<<" | "<<left<<setw(15)<<mDOJ<<" | "
     <<left<<setw(11)<<mLeavesLeft<<" | "<<left<<setw(14)<<mLeavesAvailed<<" | "<<left<<setw(14)<<"NA"<<" | "<<left<<setw(7)<<"NA"<<" | "
@@ -43,21 +44,44 @@ ostream& operator<<(ostream& OutParam, const XyzFullTimeEmployee& XyzFullTimeEmp
 
 // Overloading >> input stream operator to input XyzFullTimeEmployee object
 istream& operator>>(istream& InParam, XyzFullTimeEmployee& XyzEmployeeParam) {
-        cout << "Enter Name: ";
+        cout << "Enter Name : ";
         getline(InParam, XyzEmployeeParam.mName);
+        while(!HelperClass::validateName(XyzEmployeeParam.mName)){
+            cout<<"Name cannot be left blank.\nEnter Name: ";
+            getline(InParam, XyzEmployeeParam.mName);
+        }
+
         cout << "Enter Gender: 1. Male, 2. Female"<<endl;
         cout << "Your choice: ";
         InParam >> XyzEmployeeParam.mGender;
         InParam.ignore();        
-        cout << "Enter Date of Birth: ";
+        
+        cout << "Enter Date of Birth (DD-MM-YYYY): ";
         getline(InParam, XyzEmployeeParam.mDOB);
-        cout << "Enter Date of Joining: ";
+        while(!HelperClass::isValidDateFormat(XyzEmployeeParam.mDOB)){
+            cout << "Incorrect Format\nEnter Date of Birth (DD-MM-YYYY): ";
+            getline(InParam, XyzEmployeeParam.mDOB);
+        }
+        
+        cout << "Enter Date of Joining (DD-MM-YYYY): ";
         getline(InParam, XyzEmployeeParam.mDOJ);
+        while(!HelperClass::isValidDateFormat(XyzEmployeeParam.mDOJ)){
+            cout << "Incorrect Format\nEnter Date of Joining (DD-MM-YYYY): ";
+            getline(InParam, XyzEmployeeParam.mDOJ);
+        }
+        while(!HelperClass::validateDOJ(XyzEmployeeParam.mDOB, XyzEmployeeParam.mDOJ)){
+            cout<<"The employee must be above 18 years of age on the date of joining.\n";
+            cout << "Re-enter Date of Joining (DD-MM-YYYY): ";
+            getline(InParam, XyzEmployeeParam.mDOJ);
+        }
+        
         XyzEmployeeParam.mType = XyzEmployeeEnums::FullTime;
+        
         cout << "Enter Status: 1. Active, 2. Inactive, 3. Resigned"<<endl;
         cout<<"Your choice: ";
         InParam>>XyzEmployeeParam.mStatus;
         cout<<endl;
+        
         XyzEmployeeParam.mLeavesLeft = STANDARD_LEAVES;
         return InParam;
 }

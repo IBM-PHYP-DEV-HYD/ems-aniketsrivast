@@ -1,5 +1,6 @@
 #include "XyzContractorEmployee.H"
 #include <iomanip>
+#include "HelperClass.H"
 
 // Default Destructor
 XyzContractorEmployee::~XyzContractorEmployee() = default;
@@ -16,7 +17,7 @@ void XyzContractorEmployee::setAgency(int agencyParam){
 
 // Print Contractor Employee details
 void XyzContractorEmployee::printEmployeeDetails() {
-    cout << "| "<<left<<setw(22)<<mName<<" | "<<left<<setw(10)<<mEmpID<<" | "<<left<<setw(10)<<"Contractor"<<" | "
+    cout << "| "<<left<<setw(22)<<mName<<" | "<<left<<setw(12)<<mEmpID<<" | "<<left<<setw(10)<<"Contractor"<<" | "
     <<left<<setw(12)<<((mStatus==XyzEmployeeEnums::Active)?"Active":((mStatus==XyzEmployeeEnums::Inactive)?"Inactive":"Resigned"))<<" | "
     <<left<<setw(9)<<((mGender==XyzEmployeeEnums::Male)?"Male":"Female")<<" | "<<left<<setw(13)<<mDOB<<" | "
     <<left<<setw(15)<<mDOJ<<" | "<<left<<setw(11)<<"NA"<<" | "<<left<<setw(14)<<"NA"<<" | "<<left<<setw(14)
@@ -41,19 +42,42 @@ ostream& operator<<(ostream& OutParam, const XyzContractorEmployee& XyzFullTimeE
 istream& operator>>(istream& InParam, XyzContractorEmployee& XyzEmployeeParam) {
         cout << "Enter Name: ";
         getline(InParam, XyzEmployeeParam.mName);
+        while(!HelperClass::validateName(XyzEmployeeParam.mName)){
+            cout<<"Name cannot be left blank.\nEnter Name: ";
+            getline(InParam, XyzEmployeeParam.mName);
+        }
+
         cout << "Enter Gender: 1. Male, 2. Female"<<endl;
         cout << "Your choice: ";
         InParam >> XyzEmployeeParam.mGender;
         InParam.ignore();        
-        cout << "Enter Date of Birth: ";
+
+        cout << "Enter Date of Birth (DD-MM-YYYY): ";
         getline(InParam, XyzEmployeeParam.mDOB);
-        cout << "Enter Date of Joining: ";
+        while(!HelperClass::isValidDateFormat(XyzEmployeeParam.mDOB)){
+            cout << "Incorrect Format\nEnter Date of Birth (DD-MM-YYYY): ";
+            getline(InParam, XyzEmployeeParam.mDOB);
+        }
+
+        cout << "Enter Date of Joining (DD-MM-YYYY): ";
         getline(InParam, XyzEmployeeParam.mDOJ);
+        while(!HelperClass::isValidDateFormat(XyzEmployeeParam.mDOJ)){
+            cout << "Incorrect Format\nEnter Date of Joining (DD-MM-YYYY): ";
+            getline(InParam, XyzEmployeeParam.mDOJ);
+        }        
+        while(!HelperClass::validateDOJ(XyzEmployeeParam.mDOB, XyzEmployeeParam.mDOJ)){
+            cout<<"The employee must be above 18 years of age on the date of joining.\n";
+            cout << "Re-enter Date of Joining (DD-MM-YYYY): ";
+            getline(InParam, XyzEmployeeParam.mDOJ);
+        }
+
         XyzEmployeeParam.mType = XyzEmployeeEnums::Contractor;
+
         cout << "Enter Status: 1. Active, 2. Inactive, 3. Resigned"<<endl;
         cout<<"Your choice: ";
         InParam>>XyzEmployeeParam.mStatus;
         cout<<endl;
+
         cout<<"Enter Agency: 1. Avengers, 2. Justice League, 3. X-Men\n";
         cout<<"Your choice: ";
         InParam>>XyzEmployeeParam.mAgency;

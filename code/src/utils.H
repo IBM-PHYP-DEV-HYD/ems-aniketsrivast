@@ -7,6 +7,8 @@ using namespace std;
 
 // Standard leaves allotted to a new Full-Time Employee
 #define STANDARD_LEAVES 22
+#define MAX_RANDOM_EMPLOYEES 100
+#define MIN_RANDOM_EMPLOYEES 1
 
 // Node for EDLL
 template<class S>
